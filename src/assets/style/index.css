@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-orange) var(--color-translucent);
+}
+
+body {
+	@apply m-0 box-border p-0;
+}
+
+:root {
+	@apply bg-body text-text text-[18px] h-screen max-w-[1400px] mx-auto overflow-x-hidden overflow-y-hidden font-light;
+}
+
+@theme {
+	--color-body: #010203;
+	--color-text: #edece8;
+	--color-translucent: rgba(255, 255, 255, 0.3);
+	--color-pink: #d1a2a3;
+	--color-error: #e21e13;
+	--color-orange: #a74601;
+	--color-additional: #6681b0;
+	--color-light-gray: #79828d;
+	--color-dark-gray: #2c2c2c;
+	--color-dark: #001b4a;
+
+	--shadow-light: 0 0 21px 7px rgba(200, 200, 200, 0.1);
+	--shadow-lightBorder: 0 0 2px 1px rgba(200, 200, 200, 0.1);
+	--shadow-dark: 0 0 21px 5px rgba(0, 0, 0, 0.4);
+
+	--padding-nav-y: 30px;
+	--padding-nav-x: 30px;
+	--text-nav: 22px;
+	--text-title: 30px;
+	--padding-title: 14px;
+	--height-main: calc(
+		100vh -
+			(
+				var(--text-title) + (var(--padding-title) * 2) +
+					(var(--height-footer)) + (var(--padding-nav-y) * 2) +
+					(var(--padding-main-y) * 2)
+			)
+	);
+	--height-main-small: 100vh;
+	--padding-main-x: 10px;
+	--padding-main-y: 10px;
+	--gap-main: var(--padding-main-y);
+
+	--height-footer: 40px;
+}
