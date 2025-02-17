@@ -1,13 +1,12 @@
 ﻿import { ChangeEvent } from "react";
 
-export type UserResponse = {
+//User
+
+export type UserDto = {
 	username: string;
 	email: string;
 	password: string;
-	bookId: string[];
 };
-
-export type UserDto = Omit<UserResponse, "bookId">;
 
 export type RegisterForm = {
 	username: string;
@@ -29,6 +28,7 @@ export type RegisterUserFormFieldsetProps = {
 	errors: RegisterFormErrors;
 };
 
+//Book
 export type BookResponse = {
 	id: string;
 	title: string;
@@ -51,6 +51,23 @@ export type PaginatedBooks = {
 	items: number;
 	data: BookResponse[];
 };
+
+//Log
+
+export type LogDto = {
+	action:
+		| "Registration"
+		| "Account deletion"
+		| "Login"
+		| "Logout"
+		| "Borrowing a book"
+		| "Returning the borrowed book";
+	created_on: string;
+	created_at: string;
+	userID: string;
+};
+
+//
 export type FormChangeEvent = ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
 export type FieldErrorsProps = {
@@ -60,4 +77,12 @@ export type FieldErrorsProps = {
 export type ResponseMessage = {
 	status: "fail" | "success";
 	message: string;
+	action:
+		| "Registration"
+		| "Account deletion"
+		| "Login"
+		| "Logout"
+		| "Borrowing a book"
+		| "Returning the borrowed book";
+	id?: string;
 };
