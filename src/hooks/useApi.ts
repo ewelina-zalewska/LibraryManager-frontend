@@ -4,6 +4,7 @@ export const useApi = () => {
 	const CALL = async <R, P = void>(
 		url: string,
 		method: "GET" | "DELETE" | "POST" | "PUT" | "PATCH",
+		credentials?: RequestCredentials | undefined,
 		payload?: P,
 	): Promise<R> => {
 		const commonData = {
@@ -16,6 +17,7 @@ export const useApi = () => {
 		const reqData = payload
 			? {
 					...commonData,
+					credentials,
 					body: JSON.stringify(payload),
 				}
 			: commonData;
@@ -40,7 +42,7 @@ export const useApi = () => {
 	};
 
 	const API_POST = async <R, P>(url: string, data: P) => {
-		return await CALL<R, P>(url, "POST", data);
+		return await CALL<R, P>(url, "POST", "include", data);
 	};
 
 	const API_DELETE = async <R>(url: string) => {
@@ -48,11 +50,11 @@ export const useApi = () => {
 	};
 
 	const API_PUT = async <R, P>(url: string, payload: P) => {
-		return await CALL<R, P>(url, "PUT", payload);
+		return await CALL<R, P>(url, "PUT", "include", payload);
 	};
 
 	const API_PATCH = async <R, P>(url: string, payload: P) => {
-		return await CALL<R, P>(url, "PATCH", payload);
+		return await CALL<R, P>(url, "PATCH", "include", payload);
 	};
 
 	return {
