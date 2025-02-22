@@ -6,18 +6,20 @@ import { useDisabled } from "@/hooks/useDisabled";
 import { useCreateUserMutation } from "@/mutations/useCreateUserMutatuion";
 import { validateNewUser } from "@/utils/validateNewUser";
 import { CollapsibleAccordion } from "@/components/CollapsibleAccordion";
-import { RegisterUserFormFieldset } from "@/pages/auth/RegisterUserFormFieldset";
+import { RegisterUserFormFieldset } from "@/pages/auth/user/register/RegisterUserFormFieldset";
 import { TheButton } from "@/components/navigation/TheButton";
+import { Route as LoginImport } from "@/routes/login";
 
 export const RegisterUser = () => {
 	const formRef = useRef<HTMLFormElement>(null);
+	const loginLink = LoginImport.fullPath;
 
 	const { mutate: CREATE_USER, isPending, data } = useCreateUserMutation();
 
 	const { isDisabled, setDisabled } = useDisabled();
 	const [submitClicked, setSubmitClicked] = useState<boolean>(false);
-	const [response, setResponse] = useState<ResponseMessage>();
-	const { success, setSuccess } = useSuccess("/login", response);
+	const [response, setResponse] = useState<ResponseMessage | null>(null);
+	const { success, setSuccess } = useSuccess(loginLink, response);
 
 	const [formState, setFormState, HANDLE_CHANGE] = useForm<RegisterForm>({
 		username: "",
