@@ -26,7 +26,7 @@ export const TheInput = ({
 
 	return (
 		<div className=" flex flex-col items-center ">
-			<label>{label}</label>
+			<label className="pt-3">{label}</label>
 			<input
 				disabled={disabled}
 				type={type}
