@@ -77,7 +77,7 @@ export type FieldErrorsProps = {
 export type ResponseMessage = {
 	status: "fail" | "success";
 	message: string;
-	action:
+	action?:
 		| "Registration"
 		| "Account deletion"
 		| "Login"
@@ -85,4 +85,24 @@ export type ResponseMessage = {
 		| "Borrowing a book"
 		| "Returning the borrowed book";
 	id?: string;
+	role?: string;
+};
+
+//Login
+export type LoginForm = {
+	login: string;
+	password: string;
+};
+
+export type LoginDto = LoginForm;
+
+export type LoginFormErrors = {
+	login: string[];
+	password: string[];
+};
+
+export type LoginUserFormFieldsetProps = {
+	onChange: (e: FormChangeEvent) => void;
+	formState: LoginForm;
+	errors: LoginFormErrors;
 };
