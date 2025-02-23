@@ -1,21 +1,33 @@
 ﻿import { useSuspenseQuery } from "@tanstack/react-query";
-import { Outlet, useNavigate } from "@tanstack/react-router";
+import { Outlet } from "@tanstack/react-router";
 import { bookQueryOptions } from "@/queries/bookQuery";
 import { ModalBox } from "@/components/ModalBox";
 import { LinkToPage } from "@/components/navigation/LinkToPage";
-import { getRouteApi } from "@tanstack/react-router";
 import { TheButton } from "@/components/navigation/TheButton";
+import { useUpdateBookMutation } from "@/mutations/useUpdateBookMutation";
+import { getBookIDFromUser } from "@/utils/getBookIDfromUser";
+import { getBookIDFromAdmin } from "@/utils/getBookIDfromAdmin";
 
-const categoryRoute = getRouteApi("/books/$bookId");
+export const SingleBook = (role: "admin" | "user") => {
+	const admin = role === "admin";
+	const user = role === "user";
+	let bookId: string = "";
 
-export const SingleBook = () => {
-	const { bookId } = categoryRoute.useParams();
+	if (user) {
+		bookId = getBookIDFromUser();
+	} else if (admin) {
+		bookId = getBookIDFromAdmin();
+	}
 
 	const { data: book, isPending } = useSuspenseQuery(bookQueryOptions(bookId));
 
-	const navigate = useNavigate();
+	const { mutate: EDIT_COPIES } = useUpdateBookMutation(bookId);
 
-	const RENT_BOOK = () => navigate({ to: "/login" });
+	const RENT_BOOK = () => {
+		EDIT_COPIES({
+			copies: book.copies - 1,
+		});
+	};
 
 	const descriptionContainerStyle =
 		"flex w-full hover:text-orange-400 cursor-pointer";
@@ -49,9 +61,16 @@ export const SingleBook = () => {
 						<p className={titleStyle}>Release date:</p>
 						<p className={descriptionStyle}>{book.releaseDate}</p>
 					</div>
-					<TheButton btnLabel="Rent" disabled={isPending} onClick={RENT_BOOK} />
+					<TheButton
+						btnLabel="Rent"
+						disabled={isPending || role === "admin"}
+						onClick={RENT_BOOK}
+					/>
 				</div>
-				<LinkToPage link="/books" title="Go Back"></LinkToPage>
+				<LinkToPage
+					link={role === "admin" ? "/auth/admin/books" : "/auth/user/books"}
+					title="Go Back"
+				></LinkToPage>
 			</ModalBox>
 			<Outlet />
 		</>

@@ -3,9 +3,13 @@ import { BookResponse } from "@/types";
 
 type BooksListTableProps = {
 	filteredBooks: BookResponse[];
+	url:
+		| "/books/$bookId"
+		| "/auth/admin/books/$bookId"
+		| "/auth/user/books/$bookId";
 };
 
-export const BooksListTable = ({ filteredBooks }: BooksListTableProps) => {
+export const BooksListTable = ({ filteredBooks, url }: BooksListTableProps) => {
 	const singleBookStyle = "px-5 py-3";
 
 	return (
@@ -45,7 +49,7 @@ export const BooksListTable = ({ filteredBooks }: BooksListTableProps) => {
 						</td>
 						<td className={singleBookStyle}>
 							<Link
-								to="/books/$bookId"
+								to={url}
 								params={{ bookId: book.id }}
 								search={{ page: 1 }}
 								className="font-medium hover:text-orange-400 "

@@ -5,7 +5,7 @@ import { TheError } from "@/components/handleData/TheError";
 import { PageNotFound } from "@/components/handleData/PageNotFound";
 
 export const Route = createLazyFileRoute("/books/$bookId")({
-	component: () => SingleBook("/books"),
+	component: SingleBook,
 	notFoundComponent: () => PageNotFound("Book"),
 	pendingComponent: DataLoading,
 	errorComponent: TheError,

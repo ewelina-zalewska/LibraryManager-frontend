@@ -12,11 +12,13 @@ import { getCurrentPageFromAdmin } from "@/utils/getCurrentPageFromAdmin";
 
 export const BooksList = (role: "admin" | "user") => {
 	const booksPerPage = 8;
+	const admin = role === "admin";
+	const user = role === "user";
 	let currentPage: number = 1;
 
-	if (role === "user") {
+	if (user) {
 		currentPage = getCurrentPageFromUser();
-	} else if (role === "admin") {
+	} else if (admin) {
 		currentPage = getCurrentPageFromAdmin();
 	}
 
@@ -60,7 +62,10 @@ export const BooksList = (role: "admin" | "user") => {
 					<p>No results</p>
 				</div>
 			) : (
-				<BooksListTable filteredBooks={BOOKS_DATA} />
+				<BooksListTable
+					filteredBooks={BOOKS_DATA}
+					url={admin ? "/auth/admin/books/$bookId" : "/auth/user/books/$bookId"}
+				/>
 			)}
 			<BooksListPage
 				filteredBooks={filteredBooks}

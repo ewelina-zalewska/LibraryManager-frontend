@@ -54,7 +54,7 @@ export const BooksList = () => {
 					<p>No results</p>
 				</div>
 			) : (
-				<BooksListTable filteredBooks={BOOKS_DATA} />
+				<BooksListTable filteredBooks={BOOKS_DATA} url={"/books/$bookId"} />
 			)}
 			<BooksListPage
 				filteredBooks={filteredBooks}
