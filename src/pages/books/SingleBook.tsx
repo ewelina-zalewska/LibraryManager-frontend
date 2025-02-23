@@ -1,19 +1,26 @@
 ﻿import { useSuspenseQuery } from "@tanstack/react-query";
-import { Outlet } from "@tanstack/react-router";
+import { Outlet, useNavigate } from "@tanstack/react-router";
 import { bookQueryOptions } from "@/queries/bookQuery";
 import { ModalBox } from "@/components/ModalBox";
 import { LinkToPage } from "@/components/navigation/LinkToPage";
 import { getRouteApi } from "@tanstack/react-router";
 import { TheButton } from "@/components/navigation/TheButton";
 import { useUpdateBookMutation } from "@/mutations/useUpdateBookMutation";
+import { useCheckTokenQuery } from "@/hooks/useCheckTokenQuery";
 
 const categoryRoute = getRouteApi("/books/$bookId");
 
-export const SingleBook = () => {
+export const SingleBook = (link: string) => {
 	const { bookId } = categoryRoute.useParams();
+	const { isAuthorized } = useCheckTokenQuery("auth/user");
+
 	const { data: book, isPending } = useSuspenseQuery(bookQueryOptions(bookId));
+
+	const navigate = useNavigate();
 	const { mutate: EDIT_COPIES } = useUpdateBookMutation(bookId);
+
 	const RENT_BOOK = () => {
+		if (isAuthorized === "reject") navigate({ to: "/login" });
 		EDIT_COPIES({
 			copies: book.copies - 1,
 		});
@@ -53,7 +60,7 @@ export const SingleBook = () => {
 					</div>
 					<TheButton btnLabel="Rent" disabled={isPending} onClick={RENT_BOOK} />
 				</div>
-				<LinkToPage link="/books" title="Go Back"></LinkToPage>
+				<LinkToPage link={link} title="Go Back"></LinkToPage>
 			</ModalBox>
 			<Outlet />
 		</>

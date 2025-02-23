@@ -4,8 +4,10 @@ import { DataLoading } from "@/components/handleData/DataLoading";
 import { TheError } from "@/components/handleData/TheError";
 import { PageNotFound } from "@/components/handleData/PageNotFound";
 
-export const Route = createLazyFileRoute("/books/$bookId")({
-	component: () => SingleBook("/books"),
+export const Route = createLazyFileRoute(
+	"/auth/_withUserAuth/user/books/$bookId",
+)({
+	component: () => SingleBook("/auth//user/books"),
 	notFoundComponent: () => PageNotFound("Book"),
 	pendingComponent: DataLoading,
 	errorComponent: TheError,

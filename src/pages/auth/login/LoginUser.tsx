@@ -9,13 +9,13 @@ import { CollapsibleAccordion } from "@/components/CollapsibleAccordion";
 import { TheButton } from "@/components/navigation/TheButton";
 import { LoginUserFormFieldset } from "@/pages/auth/login/LoginUserFormFieldset";
 
-import { Route as AuthUserImport } from "@/routes/auth/_withUserAuth/user";
-import { Route as AuthAdminImport } from "@/routes/auth/_withAdminAuth/admin";
+import { Route as AuthUserHomePageImport } from "@/routes/auth/_withUserAuth/user/homePage";
+import { Route as AuthAdminHomePageImport } from "@/routes/auth/_withAdminAuth/admin/homePage";
 
 export const LoginUser = () => {
 	const formRef = useRef<HTMLFormElement>(null);
-	const authUserLink = AuthUserImport.fullPath;
-	const authAdminLink = AuthAdminImport.fullPath;
+	const authUserLink = AuthUserHomePageImport.fullPath;
+	const authAdminLink = AuthAdminHomePageImport.fullPath;
 
 	const { mutate: LOGIN_USER, isPending, data } = useLogInMutation();
 
