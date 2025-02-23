@@ -11,7 +11,7 @@ import { TheInput } from "@/components/TheInput";
 const booksRoute = getRouteApi("/books");
 
 export const BooksList = () => {
-	const booksPerPage = 10;
+	const booksPerPage = 8;
 	const { page: currentPage } = booksRoute.useSearch();
 
 	const { data: allBooks } = useSuspenseQuery(booksQueryOptions);
