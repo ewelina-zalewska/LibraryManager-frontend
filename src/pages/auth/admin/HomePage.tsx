@@ -1,7 +1,11 @@
-﻿export const HomePage = () => {
+﻿import { CollapsibleAccordion } from "@/components/auth/CollapsibleAccordion";
+
+export const HomePage = () => {
 	return (
-		<>
-			<h1>HomePage - AdminUser</h1>
-		</>
+		<CollapsibleAccordion role="admin">
+			<h2 className="text-center p-8 text-[20px]">
+				Welcome to the admin panel
+			</h2>
+		</CollapsibleAccordion>
 	);
 };

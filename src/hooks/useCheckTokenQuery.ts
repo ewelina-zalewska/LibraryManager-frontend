@@ -8,6 +8,8 @@ export const useCheckTokenQuery = (url: string) => {
 		null,
 	);
 	const [login, setLogin] = useState<string | null>(null);
+	const [role, setRole] = useState<string | null>(null);
+
 	fetch(`${API_BASE}${url}`, {
 		credentials: "include",
 	})
@@ -17,10 +19,12 @@ export const useCheckTokenQuery = (url: string) => {
 		.then((data: ResponseMessage) => {
 			if (data.status === "success") {
 				if (data.id) setLogin(data.id);
+				if (data.role) setRole(data.role);
+
 				setAuthorized("access");
 			} else setAuthorized("reject");
 		})
 		.catch((error) => Promise.reject(`Error: ${error}`));
-	console.log(isAuthorized);
-	return { isAuthorized, login };
+
+	return { isAuthorized, login, role };
 };

@@ -1,15 +1,16 @@
 ﻿import { useState } from "react";
-import { Route as AuthWithAdminAuthHomePageImport } from "@/routes/auth/_withAdminAuth/admin/homePage";
-import { Route as AuthWithAdminAuthAdminBooksImport } from "@/routes/auth/_withAdminAuth/admin/books";
-import { Route as AuthWithAdminAuthAdminDashboardImport } from "@/routes/auth/_withAdminAuth/admin/dashboard";
-import { Route as LogoutImport } from "@/routes/logout";
 import { Link } from "@tanstack/react-router";
+import { Route as AuthWithUserAuthUserHomePageImport } from "@/routes/auth/_withUserAuth/user/homePage";
+import { Route as AuthWithUserAuthUserBooksImport } from "@/routes/auth/_withUserAuth/user/books";
+import { Route as AuthWithUserAuthUserDashboardImport } from "@/routes/auth/_withUserAuth/user/dashboard";
+import { Route as LogoutImport } from "@/routes/logout";
+import { GetLogout } from "@/components/auth/navigation/GetLogout";
 
-export const AdminNavBar = () => {
+export const UserNavBar = () => {
 	const title = "Library Manager";
-	const homeLink = AuthWithAdminAuthHomePageImport.fullPath;
-	const booksLink = AuthWithAdminAuthAdminBooksImport.fullPath;
-	const dashboardLink = AuthWithAdminAuthAdminDashboardImport.fullPath;
+	const homeLink = AuthWithUserAuthUserHomePageImport.fullPath;
+	const booksLink = AuthWithUserAuthUserBooksImport.fullPath;
+	const dashboardLink = AuthWithUserAuthUserDashboardImport.fullPath;
 	const LogoutLink = LogoutImport.fullPath;
 
 	const [open, setOpen] = useState<boolean>(false);
@@ -62,14 +63,10 @@ export const AdminNavBar = () => {
 								Dashboard
 							</Link>
 						</li>
-						<li>
-							<Link
-								to={LogoutLink}
-								className={`${MARK_ACTIVE_PATH(LogoutLink)}`}
-							>
-								Logout
-							</Link>
-						</li>
+						<GetLogout
+							logoutLink={LogoutLink}
+							selected={() => MARK_ACTIVE_PATH(LogoutLink)}
+						/>
 					</ul>
 				</nav>
 			</header>

@@ -5,11 +5,12 @@ import { booksQueryOptions } from "@/queries/booksQuery";
 import { BookResponse, FormChangeEvent } from "@/types";
 import { BooksListTable } from "@/pages/books/BooksListTable";
 import { BooksListPage } from "@/pages/books/BooksListPage";
+import { CollapsibleAccordion } from "@/components/auth/CollapsibleAccordion";
 import { TheInput } from "@/components/TheInput";
 import { getCurrentPageFromUser } from "@/utils/getCurrentPageFromUser";
 import { getCurrentPageFromAdmin } from "@/utils/getCurrentPageFromAdmin";
 
-export const BooksList = (role: string) => {
+export const BooksList = (role: "admin" | "user") => {
 	const booksPerPage = 8;
 	let currentPage: number = 1;
 
@@ -44,7 +45,7 @@ export const BooksList = (role: string) => {
 	}, [currentPage, filteredBooks]);
 
 	return (
-		<>
+		<CollapsibleAccordion role={role}>
 			<div className="w-[80%] mx-auto flex md:justify-end justify-center my-5 md:my-1">
 				<TheInput
 					type="text"
@@ -67,6 +68,6 @@ export const BooksList = (role: string) => {
 				currentPage={currentPage}
 			/>
 			<Outlet />
-		</>
+		</CollapsibleAccordion>
 	);
 };

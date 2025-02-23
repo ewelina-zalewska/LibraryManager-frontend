@@ -1,9 +1,8 @@
 ﻿import { Outlet } from "@tanstack/react-router";
 
-export const VisitingCard = () => {
+export const TheOutlet = () => {
 	return (
 		<>
-			<div>CARD NUMBER AND USERNAME</div>
 			<Outlet />
 		</>
 	);
