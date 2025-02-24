@@ -33,6 +33,9 @@ import { Route as AuthWithAdminAuthAdminHomePageImport } from "./routes/auth/_wi
 import { Route as AuthWithAdminAuthAdminDashboardImport } from "./routes/auth/_withAdminAuth/admin/dashboard";
 import { Route as AuthWithAdminAuthAdminBooksImport } from "./routes/auth/_withAdminAuth/admin/books";
 import { Route as AuthWithAdminAuthAdminSplatImport } from "./routes/auth/_withAdminAuth/admin/$";
+import { Route as AuthWithUserAuthUserBorrowBorrowImport } from "./routes/auth/_withUserAuth/user/borrow/borrow";
+import { Route as AuthWithUserAuthUserBorrowBookIdImport } from "./routes/auth/_withUserAuth/user/borrow/$bookId";
+import { Route as AuthWithUserAuthUserBorrowSplatImport } from "./routes/auth/_withUserAuth/user/borrow/$";
 import { Route as AuthWithUserAuthUserBooksBookIdImport } from "./routes/auth/_withUserAuth/user/books/$bookId";
 import { Route as AuthWithAdminAuthAdminBooksBookIdImport } from "./routes/auth/_withAdminAuth/admin/books/$bookId";
 
@@ -178,6 +181,31 @@ const AuthWithAdminAuthAdminSplatRoute =
 		id: "/$",
 		path: "/$",
 		getParentRoute: () => AuthWithAdminAuthAdminRoute,
+	} as any);
+
+const AuthWithUserAuthUserBorrowBorrowRoute =
+	AuthWithUserAuthUserBorrowBorrowImport.update({
+		id: "/borrow/borrow",
+		path: "/borrow/borrow",
+		getParentRoute: () => AuthWithUserAuthUserRoute,
+	} as any);
+
+const AuthWithUserAuthUserBorrowBookIdRoute =
+	AuthWithUserAuthUserBorrowBookIdImport.update({
+		id: "/borrow/$bookId",
+		path: "/borrow/$bookId",
+		getParentRoute: () => AuthWithUserAuthUserRoute,
+	} as any).lazy(() =>
+		import("./routes/auth/_withUserAuth/user/borrow/$bookId.lazy").then(
+			(d) => d.Route,
+		),
+	);
+
+const AuthWithUserAuthUserBorrowSplatRoute =
+	AuthWithUserAuthUserBorrowSplatImport.update({
+		id: "/borrow/$",
+		path: "/borrow/$",
+		getParentRoute: () => AuthWithUserAuthUserRoute,
 	} as any);
 
 const AuthWithUserAuthUserBooksBookIdRoute =
@@ -367,6 +395,27 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof AuthWithUserAuthUserBooksBookIdImport;
 			parentRoute: typeof AuthWithUserAuthUserBooksImport;
 		};
+		"/auth/_withUserAuth/user/borrow/$": {
+			id: "/auth/_withUserAuth/user/borrow/$";
+			path: "/borrow/$";
+			fullPath: "/auth/user/borrow/$";
+			preLoaderRoute: typeof AuthWithUserAuthUserBorrowSplatImport;
+			parentRoute: typeof AuthWithUserAuthUserImport;
+		};
+		"/auth/_withUserAuth/user/borrow/$bookId": {
+			id: "/auth/_withUserAuth/user/borrow/$bookId";
+			path: "/borrow/$bookId";
+			fullPath: "/auth/user/borrow/$bookId";
+			preLoaderRoute: typeof AuthWithUserAuthUserBorrowBookIdImport;
+			parentRoute: typeof AuthWithUserAuthUserImport;
+		};
+		"/auth/_withUserAuth/user/borrow/borrow": {
+			id: "/auth/_withUserAuth/user/borrow/borrow";
+			path: "/borrow/borrow";
+			fullPath: "/auth/user/borrow/borrow";
+			preLoaderRoute: typeof AuthWithUserAuthUserBorrowBorrowImport;
+			parentRoute: typeof AuthWithUserAuthUserImport;
+		};
 	}
 }
 
@@ -448,6 +497,9 @@ interface AuthWithUserAuthUserRouteChildren {
 	AuthWithUserAuthUserBooksRoute: typeof AuthWithUserAuthUserBooksRouteWithChildren;
 	AuthWithUserAuthUserDashboardRoute: typeof AuthWithUserAuthUserDashboardRoute;
 	AuthWithUserAuthUserHomePageRoute: typeof AuthWithUserAuthUserHomePageRoute;
+	AuthWithUserAuthUserBorrowSplatRoute: typeof AuthWithUserAuthUserBorrowSplatRoute;
+	AuthWithUserAuthUserBorrowBookIdRoute: typeof AuthWithUserAuthUserBorrowBookIdRoute;
+	AuthWithUserAuthUserBorrowBorrowRoute: typeof AuthWithUserAuthUserBorrowBorrowRoute;
 }
 
 const AuthWithUserAuthUserRouteChildren: AuthWithUserAuthUserRouteChildren = {
@@ -455,6 +507,9 @@ const AuthWithUserAuthUserRouteChildren: AuthWithUserAuthUserRouteChildren = {
 	AuthWithUserAuthUserBooksRoute: AuthWithUserAuthUserBooksRouteWithChildren,
 	AuthWithUserAuthUserDashboardRoute: AuthWithUserAuthUserDashboardRoute,
 	AuthWithUserAuthUserHomePageRoute: AuthWithUserAuthUserHomePageRoute,
+	AuthWithUserAuthUserBorrowSplatRoute: AuthWithUserAuthUserBorrowSplatRoute,
+	AuthWithUserAuthUserBorrowBookIdRoute: AuthWithUserAuthUserBorrowBookIdRoute,
+	AuthWithUserAuthUserBorrowBorrowRoute: AuthWithUserAuthUserBorrowBorrowRoute,
 };
 
 const AuthWithUserAuthUserRouteWithChildren =
@@ -505,6 +560,9 @@ export interface FileRoutesByFullPath {
 	"/auth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
 	"/auth/user/books/$bookId": typeof AuthWithUserAuthUserBooksBookIdRoute;
+	"/auth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
+	"/auth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
+	"/auth/user/borrow/borrow": typeof AuthWithUserAuthUserBorrowBorrowRoute;
 }
 
 export interface FileRoutesByTo {
@@ -529,6 +587,9 @@ export interface FileRoutesByTo {
 	"/auth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
 	"/auth/user/books/$bookId": typeof AuthWithUserAuthUserBooksBookIdRoute;
+	"/auth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
+	"/auth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
+	"/auth/user/borrow/borrow": typeof AuthWithUserAuthUserBorrowBorrowRoute;
 }
 
 export interface FileRoutesById {
@@ -556,6 +617,9 @@ export interface FileRoutesById {
 	"/auth/_withUserAuth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/_withAdminAuth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
 	"/auth/_withUserAuth/user/books/$bookId": typeof AuthWithUserAuthUserBooksBookIdRoute;
+	"/auth/_withUserAuth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
+	"/auth/_withUserAuth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
+	"/auth/_withUserAuth/user/borrow/borrow": typeof AuthWithUserAuthUserBorrowBorrowRoute;
 }
 
 export interface FileRouteTypes {
@@ -581,7 +645,10 @@ export interface FileRouteTypes {
 		| "/auth/user/dashboard"
 		| "/auth/user/homePage"
 		| "/auth/admin/books/$bookId"
-		| "/auth/user/books/$bookId";
+		| "/auth/user/books/$bookId"
+		| "/auth/user/borrow/$"
+		| "/auth/user/borrow/$bookId"
+		| "/auth/user/borrow/borrow";
 	fileRoutesByTo: FileRoutesByTo;
 	to:
 		| "/"
@@ -604,7 +671,10 @@ export interface FileRouteTypes {
 		| "/auth/user/dashboard"
 		| "/auth/user/homePage"
 		| "/auth/admin/books/$bookId"
-		| "/auth/user/books/$bookId";
+		| "/auth/user/books/$bookId"
+		| "/auth/user/borrow/$"
+		| "/auth/user/borrow/$bookId"
+		| "/auth/user/borrow/borrow";
 	id:
 		| "__root__"
 		| "/"
@@ -629,7 +699,10 @@ export interface FileRouteTypes {
 		| "/auth/_withUserAuth/user/dashboard"
 		| "/auth/_withUserAuth/user/homePage"
 		| "/auth/_withAdminAuth/admin/books/$bookId"
-		| "/auth/_withUserAuth/user/books/$bookId";
+		| "/auth/_withUserAuth/user/books/$bookId"
+		| "/auth/_withUserAuth/user/borrow/$"
+		| "/auth/_withUserAuth/user/borrow/$bookId"
+		| "/auth/_withUserAuth/user/borrow/borrow";
 	fileRoutesById: FileRoutesById;
 }
 
@@ -741,7 +814,10 @@ export const routeTree = rootRoute
         "/auth/_withUserAuth/user/$",
         "/auth/_withUserAuth/user/books",
         "/auth/_withUserAuth/user/dashboard",
-        "/auth/_withUserAuth/user/homePage"
+        "/auth/_withUserAuth/user/homePage",
+        "/auth/_withUserAuth/user/borrow/$",
+        "/auth/_withUserAuth/user/borrow/$bookId",
+        "/auth/_withUserAuth/user/borrow/borrow"
       ]
     },
     "/auth/_withAdminAuth/admin/$": {
@@ -789,6 +865,18 @@ export const routeTree = rootRoute
     "/auth/_withUserAuth/user/books/$bookId": {
       "filePath": "auth/_withUserAuth/user/books/$bookId.tsx",
       "parent": "/auth/_withUserAuth/user/books"
+    },
+    "/auth/_withUserAuth/user/borrow/$": {
+      "filePath": "auth/_withUserAuth/user/borrow/$.tsx",
+      "parent": "/auth/_withUserAuth/user"
+    },
+    "/auth/_withUserAuth/user/borrow/$bookId": {
+      "filePath": "auth/_withUserAuth/user/borrow/$bookId.tsx",
+      "parent": "/auth/_withUserAuth/user"
+    },
+    "/auth/_withUserAuth/user/borrow/borrow": {
+      "filePath": "auth/_withUserAuth/user/borrow/borrow.tsx",
+      "parent": "/auth/_withUserAuth/user"
     }
   }
 }

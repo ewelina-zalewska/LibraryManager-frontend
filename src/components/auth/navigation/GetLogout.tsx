@@ -25,6 +25,7 @@ export const GetLogout = ({ logoutLink, selected }: LogoutProps) => {
 			if (!data.action || !data.id) return;
 			CREATE_LOG({
 				action: data.action,
+				bookId: null,
 				created_on: new Date().toISOString().split("T")[0],
 				created_at: getTime(),
 				userID: data.id,

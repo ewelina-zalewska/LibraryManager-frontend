@@ -49,7 +49,11 @@ export const SingleBook = () => {
 						<p className={titleStyle}>Release date:</p>
 						<p className={descriptionStyle}>{book.releaseDate}</p>
 					</div>
-					<TheButton btnLabel="Rent" disabled={isPending} onClick={RENT_BOOK} />
+					<TheButton
+						btnLabel="Borrow"
+						disabled={isPending}
+						onClick={RENT_BOOK}
+					/>
 				</div>
 				<LinkToPage link="/books" title="Go Back"></LinkToPage>
 			</ModalBox>

@@ -16,6 +16,9 @@ export const useUpdateBookMutation = (id: string) => {
 			queryClient.invalidateQueries({
 				queryKey: ["books"],
 			});
+			queryClient.refetchQueries({
+				queryKey: ["books"],
+			});
 		},
 	});
 

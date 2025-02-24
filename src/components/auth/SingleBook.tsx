@@ -1,10 +1,8 @@
 ﻿import { useSuspenseQuery } from "@tanstack/react-query";
-import { Outlet } from "@tanstack/react-router";
+import { Link, Outlet } from "@tanstack/react-router";
 import { bookQueryOptions } from "@/queries/bookQuery";
 import { ModalBox } from "@/components/ModalBox";
 import { LinkToPage } from "@/components/navigation/LinkToPage";
-import { TheButton } from "@/components/navigation/TheButton";
-import { useUpdateBookMutation } from "@/mutations/useUpdateBookMutation";
 import { getBookIDFromUser } from "@/utils/getBookIDfromUser";
 import { getBookIDFromAdmin } from "@/utils/getBookIDfromAdmin";
 
@@ -19,15 +17,7 @@ export const SingleBook = (role: "admin" | "user") => {
 		bookId = getBookIDFromAdmin();
 	}
 
-	const { data: book, isPending } = useSuspenseQuery(bookQueryOptions(bookId));
-
-	const { mutate: EDIT_COPIES } = useUpdateBookMutation(bookId);
-
-	const RENT_BOOK = () => {
-		EDIT_COPIES({
-			copies: book.copies - 1,
-		});
-	};
+	const { data: book } = useSuspenseQuery(bookQueryOptions(bookId));
 
 	const descriptionContainerStyle =
 		"flex w-full hover:text-orange-400 cursor-pointer";
@@ -61,16 +51,17 @@ export const SingleBook = (role: "admin" | "user") => {
 						<p className={titleStyle}>Release date:</p>
 						<p className={descriptionStyle}>{book.releaseDate}</p>
 					</div>
-					<TheButton
-						btnLabel="Rent"
-						disabled={isPending || role === "admin"}
-						onClick={RENT_BOOK}
-					/>
+					{user ? (
+						<Link
+							to="/auth/user/borrow/$bookId"
+							params={{ bookId: book.id }}
+							className="bg-radial-[at_1%_95%] from-orange-500 to-bold-900 to-65% shadow-lightBorder py-2 px-4 rounded-xl hover:font-bold"
+						>
+							Borrow
+						</Link>
+					) : null}
 				</div>
-				<LinkToPage
-					link={role === "admin" ? "/auth/admin/books" : "/auth/user/books"}
-					title="Go Back"
-				></LinkToPage>
+				<LinkToPage link="../" title="Go Back"></LinkToPage>
 			</ModalBox>
 			<Outlet />
 		</>

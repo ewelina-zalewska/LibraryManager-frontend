@@ -36,10 +36,19 @@ export type BookResponse = {
 	copies: number;
 	description: string;
 	releaseDate: string;
+	numberOfborrowedBooks: number;
 };
 
 export type BookDto = {
 	copies: number;
+	numberOfborrowedBooks: number;
+};
+export type BorrowedBookDto = {
+	status: "Borrowed";
+	bookId: string;
+	title: string;
+	author: string;
+	releaseDate: string;
 };
 
 export type PaginatedBooks = {
@@ -62,6 +71,7 @@ export type LogDto = {
 		| "Logout"
 		| "Borrowing a book"
 		| "Returning the borrowed book";
+	bookId: string | null;
 	created_on: string;
 	created_at: string;
 	userID: string;
@@ -84,9 +94,9 @@ export type ResponseMessage = {
 		| "Logout"
 		| "Borrowing a book"
 		| "Returning the borrowed book";
+	bookId?: string | null;
 	id?: string;
-	role?: "user" | "admin";
-	name?: string;
+	role?: string;
 };
 
 //Login
