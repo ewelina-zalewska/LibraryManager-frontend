@@ -1,10 +1,13 @@
-﻿import { CollapsibleAccordion } from "@/components/auth/CollapsibleAccordion";
+﻿import { useContext } from "react";
+import { CollapsibleAccordion } from "@/components/auth/CollapsibleAccordion";
+import { UserDataContext } from "@/context/UserDataContext";
 
 export const HomePage = () => {
+	const userData = useContext(UserDataContext);
 	return (
-		<CollapsibleAccordion role="user">
+		<CollapsibleAccordion user={userData}>
 			<h2 className="text-center p-8 text-[20px]">
-				Welcome to the logged in user page
+				{userData.name}, welcome to the logged in user page
 			</h2>
 		</CollapsibleAccordion>
 	);

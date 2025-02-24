@@ -85,7 +85,8 @@ export type ResponseMessage = {
 		| "Borrowing a book"
 		| "Returning the borrowed book";
 	id?: string;
-	role?: string;
+	role?: "user" | "admin";
+	name?: string;
 };
 
 //Login

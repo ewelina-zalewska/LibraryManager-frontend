@@ -1,8 +1,9 @@
-﻿import { useMemo, useState } from "react";
+﻿import { useMemo, useState, useContext } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Outlet } from "@tanstack/react-router";
 import { booksQueryOptions } from "@/queries/booksQuery";
 import { BookResponse, FormChangeEvent } from "@/types";
+import { UserDataContext } from "@/context/UserDataContext";
 import { BooksListTable } from "@/pages/books/BooksListTable";
 import { BooksListPage } from "@/pages/books/BooksListPage";
 import { CollapsibleAccordion } from "@/components/auth/CollapsibleAccordion";
@@ -10,7 +11,9 @@ import { TheInput } from "@/components/TheInput";
 import { getCurrentPageFromUser } from "@/utils/getCurrentPageFromUser";
 import { getCurrentPageFromAdmin } from "@/utils/getCurrentPageFromAdmin";
 
-export const BooksList = (role: "admin" | "user") => {
+export const BooksList = () => {
+	const userData = useContext(UserDataContext);
+	const { role } = userData;
 	const booksPerPage = 8;
 	const admin = role === "admin";
 	const user = role === "user";
@@ -47,7 +50,7 @@ export const BooksList = (role: "admin" | "user") => {
 	}, [currentPage, filteredBooks]);
 
 	return (
-		<CollapsibleAccordion role={role}>
+		<CollapsibleAccordion user={userData}>
 			<div className="w-[80%] mx-auto flex md:justify-end justify-center my-5 md:my-1">
 				<TheInput
 					type="text"

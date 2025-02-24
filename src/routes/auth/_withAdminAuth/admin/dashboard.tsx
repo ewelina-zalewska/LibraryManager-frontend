@@ -5,7 +5,7 @@ import { TheError } from "@/components/handleData/TheError";
 import { PageNotFound } from "@/components/handleData/PageNotFound";
 
 export const Route = createFileRoute("/auth/_withAdminAuth/admin/dashboard")({
-	component: () => TheDashboard("admin"),
+	component: TheDashboard,
 	notFoundComponent: () => PageNotFound("Dashboard"),
 	pendingComponent: DataLoading,
 	errorComponent: TheError,
