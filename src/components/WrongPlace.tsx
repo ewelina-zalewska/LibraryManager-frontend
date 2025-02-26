@@ -1,14 +1,14 @@
 ﻿import { useEffect } from "react";
 import { Outlet, useNavigate } from "@tanstack/react-router";
 
-export const WrongPlace = () => {
+export const WrongPlace = (path: string) => {
 	const time: number = 3000;
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
-			navigate({ to: "/" });
+			navigate({ to: path });
 		}, time);
 
 		return () => {

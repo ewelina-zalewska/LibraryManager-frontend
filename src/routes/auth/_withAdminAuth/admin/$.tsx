@@ -2,5 +2,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/auth/_withAdminAuth/admin/$")({
-	component: WrongPlace,
+	component: () => WrongPlace("/auth/admin/homePage"),
 });
