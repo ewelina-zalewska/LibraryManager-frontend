@@ -70,6 +70,15 @@ export const SingleBook = (role: "admin" | "user") => {
 							Delete
 						</Link>
 					) : null}
+					{admin ? (
+						<Link
+							to="/auth/admin/update/$bookId"
+							params={{ bookId: book.id }}
+							className="bg-radial-[at_1%_95%] from-orange-500 to-bold-900 to-65% shadow-lightBorder py-2 px-4 rounded-xl hover:font-bold"
+						>
+							Update
+						</Link>
+					) : null}
 				</div>
 				<LinkToPage link="../" title="Go Back"></LinkToPage>
 			</ModalBox>

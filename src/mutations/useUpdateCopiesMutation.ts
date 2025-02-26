@@ -1,16 +1,17 @@
 ﻿import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BookDto, ResponseMessage } from "@/types";
+import { BookCopiesDto, ResponseMessage } from "@/types";
 import { useApi } from "@/hooks/useApi";
 
-export const useUpdateBookMutation = (bookId: string) => {
-	const { API_PUT } = useApi();
+export const useUpdateCopiesMutation = (id: string) => {
+	const { API_PATCH } = useApi();
 	const queryClient = useQueryClient();
 
 	const { mutate, data, error, isPending } = useMutation({
-		mutationKey: ["books", bookId],
-		mutationFn: async (payload: BookDto) => {
-			return API_PUT<ResponseMessage, BookDto>(`books/${bookId}`, payload);
+		mutationKey: ["books", id],
+		mutationFn: async (body: BookCopiesDto) => {
+			return API_PATCH<ResponseMessage, BookCopiesDto>(`books/${id}`, body);
 		},
+
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ["books"],

@@ -30,6 +30,7 @@ import { Route as AuthWithUserAuthUserDashboardImport } from "./routes/auth/_wit
 import { Route as AuthWithUserAuthUserBorrowImport } from "./routes/auth/_withUserAuth/user/borrow";
 import { Route as AuthWithUserAuthUserBooksImport } from "./routes/auth/_withUserAuth/user/books";
 import { Route as AuthWithUserAuthUserSplatImport } from "./routes/auth/_withUserAuth/user/$";
+import { Route as AuthWithAdminAuthAdminUpdateImport } from "./routes/auth/_withAdminAuth/admin/update";
 import { Route as AuthWithAdminAuthAdminHomePageImport } from "./routes/auth/_withAdminAuth/admin/homePage";
 import { Route as AuthWithAdminAuthAdminDeleteImport } from "./routes/auth/_withAdminAuth/admin/delete";
 import { Route as AuthWithAdminAuthAdminDashboardImport } from "./routes/auth/_withAdminAuth/admin/dashboard";
@@ -42,6 +43,7 @@ import { Route as AuthWithUserAuthUserBorrowBorrowImport } from "./routes/auth/_
 import { Route as AuthWithUserAuthUserBorrowBookIdImport } from "./routes/auth/_withUserAuth/user/borrow/$bookId";
 import { Route as AuthWithUserAuthUserBorrowSplatImport } from "./routes/auth/_withUserAuth/user/borrow/$";
 import { Route as AuthWithUserAuthUserBooksBookIdImport } from "./routes/auth/_withUserAuth/user/books/$bookId";
+import { Route as AuthWithAdminAuthAdminUpdateBookIdImport } from "./routes/auth/_withAdminAuth/admin/update/$bookId";
 import { Route as AuthWithAdminAuthAdminDeleteMessageImport } from "./routes/auth/_withAdminAuth/admin/delete/message";
 import { Route as AuthWithAdminAuthAdminDeleteBookIdImport } from "./routes/auth/_withAdminAuth/admin/delete/$bookId";
 import { Route as AuthWithAdminAuthAdminDeleteSplatImport } from "./routes/auth/_withAdminAuth/admin/delete/$";
@@ -170,6 +172,13 @@ const AuthWithUserAuthUserSplatRoute = AuthWithUserAuthUserSplatImport.update({
 	getParentRoute: () => AuthWithUserAuthUserRoute,
 } as any);
 
+const AuthWithAdminAuthAdminUpdateRoute =
+	AuthWithAdminAuthAdminUpdateImport.update({
+		id: "/update",
+		path: "/update",
+		getParentRoute: () => AuthWithAdminAuthAdminRoute,
+	} as any);
+
 const AuthWithAdminAuthAdminHomePageRoute =
 	AuthWithAdminAuthAdminHomePageImport.update({
 		id: "/homePage",
@@ -262,6 +271,17 @@ const AuthWithUserAuthUserBooksBookIdRoute =
 		getParentRoute: () => AuthWithUserAuthUserBooksRoute,
 	} as any).lazy(() =>
 		import("./routes/auth/_withUserAuth/user/books/$bookId.lazy").then(
+			(d) => d.Route,
+		),
+	);
+
+const AuthWithAdminAuthAdminUpdateBookIdRoute =
+	AuthWithAdminAuthAdminUpdateBookIdImport.update({
+		id: "/$bookId",
+		path: "/$bookId",
+		getParentRoute: () => AuthWithAdminAuthAdminUpdateRoute,
+	} as any).lazy(() =>
+		import("./routes/auth/_withAdminAuth/admin/update/$bookId.lazy").then(
 			(d) => d.Route,
 		),
 	);
@@ -453,6 +473,13 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof AuthWithAdminAuthAdminHomePageImport;
 			parentRoute: typeof AuthWithAdminAuthAdminImport;
 		};
+		"/auth/_withAdminAuth/admin/update": {
+			id: "/auth/_withAdminAuth/admin/update";
+			path: "/update";
+			fullPath: "/auth/admin/update";
+			preLoaderRoute: typeof AuthWithAdminAuthAdminUpdateImport;
+			parentRoute: typeof AuthWithAdminAuthAdminImport;
+		};
 		"/auth/_withUserAuth/user/$": {
 			id: "/auth/_withUserAuth/user/$";
 			path: "/$";
@@ -536,6 +563,13 @@ declare module "@tanstack/react-router" {
 			fullPath: "/auth/admin/delete/message";
 			preLoaderRoute: typeof AuthWithAdminAuthAdminDeleteMessageImport;
 			parentRoute: typeof AuthWithAdminAuthAdminDeleteImport;
+		};
+		"/auth/_withAdminAuth/admin/update/$bookId": {
+			id: "/auth/_withAdminAuth/admin/update/$bookId";
+			path: "/$bookId";
+			fullPath: "/auth/admin/update/$bookId";
+			preLoaderRoute: typeof AuthWithAdminAuthAdminUpdateBookIdImport;
+			parentRoute: typeof AuthWithAdminAuthAdminUpdateImport;
 		};
 		"/auth/_withUserAuth/user/books/$bookId": {
 			id: "/auth/_withUserAuth/user/books/$bookId";
@@ -658,12 +692,28 @@ const AuthWithAdminAuthAdminDeleteRouteWithChildren =
 		AuthWithAdminAuthAdminDeleteRouteChildren,
 	);
 
+interface AuthWithAdminAuthAdminUpdateRouteChildren {
+	AuthWithAdminAuthAdminUpdateBookIdRoute: typeof AuthWithAdminAuthAdminUpdateBookIdRoute;
+}
+
+const AuthWithAdminAuthAdminUpdateRouteChildren: AuthWithAdminAuthAdminUpdateRouteChildren =
+	{
+		AuthWithAdminAuthAdminUpdateBookIdRoute:
+			AuthWithAdminAuthAdminUpdateBookIdRoute,
+	};
+
+const AuthWithAdminAuthAdminUpdateRouteWithChildren =
+	AuthWithAdminAuthAdminUpdateRoute._addFileChildren(
+		AuthWithAdminAuthAdminUpdateRouteChildren,
+	);
+
 interface AuthWithAdminAuthAdminRouteChildren {
 	AuthWithAdminAuthAdminSplatRoute: typeof AuthWithAdminAuthAdminSplatRoute;
 	AuthWithAdminAuthAdminBooksRoute: typeof AuthWithAdminAuthAdminBooksRouteWithChildren;
 	AuthWithAdminAuthAdminDashboardRoute: typeof AuthWithAdminAuthAdminDashboardRouteWithChildren;
 	AuthWithAdminAuthAdminDeleteRoute: typeof AuthWithAdminAuthAdminDeleteRouteWithChildren;
 	AuthWithAdminAuthAdminHomePageRoute: typeof AuthWithAdminAuthAdminHomePageRoute;
+	AuthWithAdminAuthAdminUpdateRoute: typeof AuthWithAdminAuthAdminUpdateRouteWithChildren;
 }
 
 const AuthWithAdminAuthAdminRouteChildren: AuthWithAdminAuthAdminRouteChildren =
@@ -676,6 +726,8 @@ const AuthWithAdminAuthAdminRouteChildren: AuthWithAdminAuthAdminRouteChildren =
 		AuthWithAdminAuthAdminDeleteRoute:
 			AuthWithAdminAuthAdminDeleteRouteWithChildren,
 		AuthWithAdminAuthAdminHomePageRoute: AuthWithAdminAuthAdminHomePageRoute,
+		AuthWithAdminAuthAdminUpdateRoute:
+			AuthWithAdminAuthAdminUpdateRouteWithChildren,
 	};
 
 const AuthWithAdminAuthAdminRouteWithChildren =
@@ -809,6 +861,7 @@ export interface FileRoutesByFullPath {
 	"/auth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRouteWithChildren;
 	"/auth/admin/delete": typeof AuthWithAdminAuthAdminDeleteRouteWithChildren;
 	"/auth/admin/homePage": typeof AuthWithAdminAuthAdminHomePageRoute;
+	"/auth/admin/update": typeof AuthWithAdminAuthAdminUpdateRouteWithChildren;
 	"/auth/user/$": typeof AuthWithUserAuthUserSplatRoute;
 	"/auth/user/books": typeof AuthWithUserAuthUserBooksRouteWithChildren;
 	"/auth/user/borrow": typeof AuthWithUserAuthUserBorrowRouteWithChildren;
@@ -821,6 +874,7 @@ export interface FileRoutesByFullPath {
 	"/auth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
 	"/auth/admin/delete/message": typeof AuthWithAdminAuthAdminDeleteMessageRoute;
+	"/auth/admin/update/$bookId": typeof AuthWithAdminAuthAdminUpdateBookIdRoute;
 	"/auth/user/books/$bookId": typeof AuthWithUserAuthUserBooksBookIdRoute;
 	"/auth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
@@ -847,6 +901,7 @@ export interface FileRoutesByTo {
 	"/auth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRouteWithChildren;
 	"/auth/admin/delete": typeof AuthWithAdminAuthAdminDeleteRouteWithChildren;
 	"/auth/admin/homePage": typeof AuthWithAdminAuthAdminHomePageRoute;
+	"/auth/admin/update": typeof AuthWithAdminAuthAdminUpdateRouteWithChildren;
 	"/auth/user/$": typeof AuthWithUserAuthUserSplatRoute;
 	"/auth/user/books": typeof AuthWithUserAuthUserBooksRouteWithChildren;
 	"/auth/user/borrow": typeof AuthWithUserAuthUserBorrowRouteWithChildren;
@@ -859,6 +914,7 @@ export interface FileRoutesByTo {
 	"/auth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
 	"/auth/admin/delete/message": typeof AuthWithAdminAuthAdminDeleteMessageRoute;
+	"/auth/admin/update/$bookId": typeof AuthWithAdminAuthAdminUpdateBookIdRoute;
 	"/auth/user/books/$bookId": typeof AuthWithUserAuthUserBooksBookIdRoute;
 	"/auth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
@@ -888,6 +944,7 @@ export interface FileRoutesById {
 	"/auth/_withAdminAuth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRouteWithChildren;
 	"/auth/_withAdminAuth/admin/delete": typeof AuthWithAdminAuthAdminDeleteRouteWithChildren;
 	"/auth/_withAdminAuth/admin/homePage": typeof AuthWithAdminAuthAdminHomePageRoute;
+	"/auth/_withAdminAuth/admin/update": typeof AuthWithAdminAuthAdminUpdateRouteWithChildren;
 	"/auth/_withUserAuth/user/$": typeof AuthWithUserAuthUserSplatRoute;
 	"/auth/_withUserAuth/user/books": typeof AuthWithUserAuthUserBooksRouteWithChildren;
 	"/auth/_withUserAuth/user/borrow": typeof AuthWithUserAuthUserBorrowRouteWithChildren;
@@ -900,6 +957,7 @@ export interface FileRoutesById {
 	"/auth/_withAdminAuth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/_withAdminAuth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
 	"/auth/_withAdminAuth/admin/delete/message": typeof AuthWithAdminAuthAdminDeleteMessageRoute;
+	"/auth/_withAdminAuth/admin/update/$bookId": typeof AuthWithAdminAuthAdminUpdateBookIdRoute;
 	"/auth/_withUserAuth/user/books/$bookId": typeof AuthWithUserAuthUserBooksBookIdRoute;
 	"/auth/_withUserAuth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/_withUserAuth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
@@ -928,6 +986,7 @@ export interface FileRouteTypes {
 		| "/auth/admin/dashboard"
 		| "/auth/admin/delete"
 		| "/auth/admin/homePage"
+		| "/auth/admin/update"
 		| "/auth/user/$"
 		| "/auth/user/books"
 		| "/auth/user/borrow"
@@ -940,6 +999,7 @@ export interface FileRouteTypes {
 		| "/auth/admin/delete/$"
 		| "/auth/admin/delete/$bookId"
 		| "/auth/admin/delete/message"
+		| "/auth/admin/update/$bookId"
 		| "/auth/user/books/$bookId"
 		| "/auth/user/borrow/$"
 		| "/auth/user/borrow/$bookId"
@@ -965,6 +1025,7 @@ export interface FileRouteTypes {
 		| "/auth/admin/dashboard"
 		| "/auth/admin/delete"
 		| "/auth/admin/homePage"
+		| "/auth/admin/update"
 		| "/auth/user/$"
 		| "/auth/user/books"
 		| "/auth/user/borrow"
@@ -977,6 +1038,7 @@ export interface FileRouteTypes {
 		| "/auth/admin/delete/$"
 		| "/auth/admin/delete/$bookId"
 		| "/auth/admin/delete/message"
+		| "/auth/admin/update/$bookId"
 		| "/auth/user/books/$bookId"
 		| "/auth/user/borrow/$"
 		| "/auth/user/borrow/$bookId"
@@ -1004,6 +1066,7 @@ export interface FileRouteTypes {
 		| "/auth/_withAdminAuth/admin/dashboard"
 		| "/auth/_withAdminAuth/admin/delete"
 		| "/auth/_withAdminAuth/admin/homePage"
+		| "/auth/_withAdminAuth/admin/update"
 		| "/auth/_withUserAuth/user/$"
 		| "/auth/_withUserAuth/user/books"
 		| "/auth/_withUserAuth/user/borrow"
@@ -1016,6 +1079,7 @@ export interface FileRouteTypes {
 		| "/auth/_withAdminAuth/admin/delete/$"
 		| "/auth/_withAdminAuth/admin/delete/$bookId"
 		| "/auth/_withAdminAuth/admin/delete/message"
+		| "/auth/_withAdminAuth/admin/update/$bookId"
 		| "/auth/_withUserAuth/user/books/$bookId"
 		| "/auth/_withUserAuth/user/borrow/$"
 		| "/auth/_withUserAuth/user/borrow/$bookId"
@@ -1125,7 +1189,8 @@ export const routeTree = rootRoute
         "/auth/_withAdminAuth/admin/books",
         "/auth/_withAdminAuth/admin/dashboard",
         "/auth/_withAdminAuth/admin/delete",
-        "/auth/_withAdminAuth/admin/homePage"
+        "/auth/_withAdminAuth/admin/homePage",
+        "/auth/_withAdminAuth/admin/update"
       ]
     },
     "/auth/_withUserAuth/user": {
@@ -1171,6 +1236,13 @@ export const routeTree = rootRoute
     "/auth/_withAdminAuth/admin/homePage": {
       "filePath": "auth/_withAdminAuth/admin/homePage.tsx",
       "parent": "/auth/_withAdminAuth/admin"
+    },
+    "/auth/_withAdminAuth/admin/update": {
+      "filePath": "auth/_withAdminAuth/admin/update.tsx",
+      "parent": "/auth/_withAdminAuth/admin",
+      "children": [
+        "/auth/_withAdminAuth/admin/update/$bookId"
+      ]
     },
     "/auth/_withUserAuth/user/$": {
       "filePath": "auth/_withUserAuth/user/$.tsx",
@@ -1232,6 +1304,10 @@ export const routeTree = rootRoute
     "/auth/_withAdminAuth/admin/delete/message": {
       "filePath": "auth/_withAdminAuth/admin/delete/message.tsx",
       "parent": "/auth/_withAdminAuth/admin/delete"
+    },
+    "/auth/_withAdminAuth/admin/update/$bookId": {
+      "filePath": "auth/_withAdminAuth/admin/update/$bookId.tsx",
+      "parent": "/auth/_withAdminAuth/admin/update"
     },
     "/auth/_withUserAuth/user/books/$bookId": {
       "filePath": "auth/_withUserAuth/user/books/$bookId.tsx",

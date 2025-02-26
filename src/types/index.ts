@@ -1,7 +1,6 @@
 ﻿import { ChangeEvent } from "react";
 
 //User
-
 export type UserDto = {
 	username: string;
 	email: string;
@@ -29,6 +28,29 @@ export type RegisterUserFormFieldsetProps = {
 };
 
 //Book
+
+export type UpdateBookForm = {
+	title: string;
+	author: string;
+	copies: number;
+	description: string;
+	releaseDate: string;
+};
+export type UpdateBookFormErrors = {
+	title: string[];
+	author: string[];
+	copies: string[];
+	description: string[];
+	releaseDate: string[];
+};
+
+export type UserBookFormFieldsetProps = {
+	onChange: (e: FormChangeEvent) => void;
+	formState: UpdateBookForm;
+	errors: UpdateBookFormErrors;
+	borrowedbooks: number;
+};
+
 export type BookResponse = {
 	id: string;
 	title: string;
@@ -39,7 +61,9 @@ export type BookResponse = {
 	numberOfborrowedBooks: number;
 };
 
-export type BookDto = {
+export type BookDto = Omit<BookResponse, "id">;
+
+export type BookCopiesDto = {
 	copies: number;
 	numberOfborrowedBooks: number;
 };
@@ -70,7 +94,9 @@ export type LogDto = {
 		| "Login"
 		| "Logout"
 		| "Borrowing a book"
-		| "Returning the borrowed book";
+		| "Returning the borrowed book"
+		| "Delete Book"
+		| "Update Book";
 	bookId: string | null;
 	created_on: string;
 	created_at: string;

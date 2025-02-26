@@ -9,6 +9,7 @@ type TheInputProps = {
 	onChange?: (e: FormChangeEvent) => void;
 	disabled?: boolean;
 	width?: number;
+	maxDate?: string;
 };
 
 export const TheInput = ({
@@ -20,6 +21,7 @@ export const TheInput = ({
 	onChange,
 	disabled,
 	width,
+	maxDate,
 }: TheInputProps) => {
 	const backgroundColor = disabled ? "bg-light-gray" : "bg-text";
 	const textColor = disabled ? "text-dark-gray" : "text-body";
@@ -27,15 +29,30 @@ export const TheInput = ({
 	return (
 		<div className=" flex flex-col items-center ">
 			<label className="pt-3">{label}</label>
-			<input
-				disabled={disabled}
-				type={type}
-				name={name}
-				placeholder={placeholder}
-				value={value}
-				onChange={onChange}
-				className={`border-[4px] rounded-xl text-center focus:outline-none focus:ring-0 focus:border-orange-500 p-[5px] w-[${width}px] ${backgroundColor} ${textColor}`}
-			/>
+			{type !== "date" && (
+				<input
+					disabled={disabled}
+					type={type}
+					name={name}
+					placeholder={placeholder}
+					value={value}
+					onChange={onChange}
+					className={`border-[4px] rounded-xl text-center focus:outline-none focus:ring-0 focus:border-orange-500 p-[5px] w-[${width}px] ${backgroundColor} ${textColor}`}
+				/>
+			)}
+			{type === "date" && (
+				<input
+					disabled={disabled}
+					type={type}
+					name={name}
+					placeholder={placeholder}
+					value={value}
+					onChange={onChange}
+					max={maxDate}
+					required
+					className={`border-[4px] rounded-xl text-center focus:outline-none focus:ring-0 focus:border-orange-500 p-[5px] w-[${width}px] ${backgroundColor} ${textColor}`}
+				/>
+			)}
 		</div>
 	);
 };
