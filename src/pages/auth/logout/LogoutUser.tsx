@@ -5,7 +5,7 @@ import { Route as LogoutImport } from "@/routes/logout";
 import { Route as IndexImport } from "@/routes/index";
 
 export const LogoutUser = () => {
-	const time = 2000;
+	const time = 3000;
 	const { status } = LogoutImport.useSearch();
 	const homeLink = IndexImport.fullPath;
 

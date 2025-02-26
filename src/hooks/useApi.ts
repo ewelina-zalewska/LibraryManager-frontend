@@ -46,7 +46,7 @@ export const useApi = () => {
 	};
 
 	const API_DELETE = async <R>(url: string) => {
-		return await CALL<R>(url, "DELETE");
+		return await CALL<R>(url, "DELETE", "include");
 	};
 
 	const API_PUT = async <R, P>(url: string, payload: P) => {

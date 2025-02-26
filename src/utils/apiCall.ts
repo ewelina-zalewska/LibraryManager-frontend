@@ -12,6 +12,7 @@ export const apiCall = async <R, P = void>(
 
 	const response = await fetch(`${API_BASE}${url}`, {
 		method: config?.method || "GET",
+		credentials: "include",
 		body: config?.body ? JSON.stringify(config.body) : undefined,
 	});
 	const data = await response.json();

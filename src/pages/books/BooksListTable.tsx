@@ -11,7 +11,6 @@ type BooksListTableProps = {
 
 export const BooksListTable = ({ filteredBooks, url }: BooksListTableProps) => {
 	const singleBookStyle = "px-5 py-3";
-
 	return (
 		<table className="w-full md:w-[95%] lg:w-[80%] mx-auto text-sm text-left text-text">
 			<caption className="p-5 text-lg font-semibold text-left">

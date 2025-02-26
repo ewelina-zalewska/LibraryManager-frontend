@@ -96,7 +96,8 @@ export type ResponseMessage = {
 		| "Returning the borrowed book";
 	bookId?: string | null;
 	id?: string;
-	role?: string;
+	role?: "user" | "admin";
+	name?: string;
 };
 
 //Login
