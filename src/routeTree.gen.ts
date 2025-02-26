@@ -35,6 +35,9 @@ import { Route as AuthWithAdminAuthAdminDeleteImport } from "./routes/auth/_with
 import { Route as AuthWithAdminAuthAdminDashboardImport } from "./routes/auth/_withAdminAuth/admin/dashboard";
 import { Route as AuthWithAdminAuthAdminBooksImport } from "./routes/auth/_withAdminAuth/admin/books";
 import { Route as AuthWithAdminAuthAdminSplatImport } from "./routes/auth/_withAdminAuth/admin/$";
+import { Route as AuthWithUserAuthUserDashboardStatisticsImport } from "./routes/auth/_withUserAuth/user/dashboard/statistics";
+import { Route as AuthWithUserAuthUserDashboardDeleteAccountImport } from "./routes/auth/_withUserAuth/user/dashboard/deleteAccount";
+import { Route as AuthWithUserAuthUserDashboardBorrowedBooksImport } from "./routes/auth/_withUserAuth/user/dashboard/borrowedBooks";
 import { Route as AuthWithUserAuthUserBorrowBorrowImport } from "./routes/auth/_withUserAuth/user/borrow/borrow";
 import { Route as AuthWithUserAuthUserBorrowBookIdImport } from "./routes/auth/_withUserAuth/user/borrow/$bookId";
 import { Route as AuthWithUserAuthUserBorrowSplatImport } from "./routes/auth/_withUserAuth/user/borrow/$";
@@ -42,6 +45,9 @@ import { Route as AuthWithUserAuthUserBooksBookIdImport } from "./routes/auth/_w
 import { Route as AuthWithAdminAuthAdminDeleteMessageImport } from "./routes/auth/_withAdminAuth/admin/delete/message";
 import { Route as AuthWithAdminAuthAdminDeleteBookIdImport } from "./routes/auth/_withAdminAuth/admin/delete/$bookId";
 import { Route as AuthWithAdminAuthAdminDeleteSplatImport } from "./routes/auth/_withAdminAuth/admin/delete/$";
+import { Route as AuthWithAdminAuthAdminDashboardLogsImport } from "./routes/auth/_withAdminAuth/admin/dashboard/logs";
+import { Route as AuthWithAdminAuthAdminDashboardBorrowedBooksImport } from "./routes/auth/_withAdminAuth/admin/dashboard/borrowedBooks";
+import { Route as AuthWithAdminAuthAdminDashboardAddBooksImport } from "./routes/auth/_withAdminAuth/admin/dashboard/addBooks";
 import { Route as AuthWithAdminAuthAdminBooksBookIdImport } from "./routes/auth/_withAdminAuth/admin/books/$bookId";
 
 // Create Virtual Routes
@@ -203,6 +209,27 @@ const AuthWithAdminAuthAdminSplatRoute =
 		getParentRoute: () => AuthWithAdminAuthAdminRoute,
 	} as any);
 
+const AuthWithUserAuthUserDashboardStatisticsRoute =
+	AuthWithUserAuthUserDashboardStatisticsImport.update({
+		id: "/statistics",
+		path: "/statistics",
+		getParentRoute: () => AuthWithUserAuthUserDashboardRoute,
+	} as any);
+
+const AuthWithUserAuthUserDashboardDeleteAccountRoute =
+	AuthWithUserAuthUserDashboardDeleteAccountImport.update({
+		id: "/deleteAccount",
+		path: "/deleteAccount",
+		getParentRoute: () => AuthWithUserAuthUserDashboardRoute,
+	} as any);
+
+const AuthWithUserAuthUserDashboardBorrowedBooksRoute =
+	AuthWithUserAuthUserDashboardBorrowedBooksImport.update({
+		id: "/borrowedBooks",
+		path: "/borrowedBooks",
+		getParentRoute: () => AuthWithUserAuthUserDashboardRoute,
+	} as any);
+
 const AuthWithUserAuthUserBorrowBorrowRoute =
 	AuthWithUserAuthUserBorrowBorrowImport.update({
 		id: "/borrow",
@@ -262,6 +289,27 @@ const AuthWithAdminAuthAdminDeleteSplatRoute =
 		id: "/$",
 		path: "/$",
 		getParentRoute: () => AuthWithAdminAuthAdminDeleteRoute,
+	} as any);
+
+const AuthWithAdminAuthAdminDashboardLogsRoute =
+	AuthWithAdminAuthAdminDashboardLogsImport.update({
+		id: "/logs",
+		path: "/logs",
+		getParentRoute: () => AuthWithAdminAuthAdminDashboardRoute,
+	} as any);
+
+const AuthWithAdminAuthAdminDashboardBorrowedBooksRoute =
+	AuthWithAdminAuthAdminDashboardBorrowedBooksImport.update({
+		id: "/borrowedBooks",
+		path: "/borrowedBooks",
+		getParentRoute: () => AuthWithAdminAuthAdminDashboardRoute,
+	} as any);
+
+const AuthWithAdminAuthAdminDashboardAddBooksRoute =
+	AuthWithAdminAuthAdminDashboardAddBooksImport.update({
+		id: "/addBooks",
+		path: "/addBooks",
+		getParentRoute: () => AuthWithAdminAuthAdminDashboardRoute,
 	} as any);
 
 const AuthWithAdminAuthAdminBooksBookIdRoute =
@@ -447,6 +495,27 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof AuthWithAdminAuthAdminBooksBookIdImport;
 			parentRoute: typeof AuthWithAdminAuthAdminBooksImport;
 		};
+		"/auth/_withAdminAuth/admin/dashboard/addBooks": {
+			id: "/auth/_withAdminAuth/admin/dashboard/addBooks";
+			path: "/addBooks";
+			fullPath: "/auth/admin/dashboard/addBooks";
+			preLoaderRoute: typeof AuthWithAdminAuthAdminDashboardAddBooksImport;
+			parentRoute: typeof AuthWithAdminAuthAdminDashboardImport;
+		};
+		"/auth/_withAdminAuth/admin/dashboard/borrowedBooks": {
+			id: "/auth/_withAdminAuth/admin/dashboard/borrowedBooks";
+			path: "/borrowedBooks";
+			fullPath: "/auth/admin/dashboard/borrowedBooks";
+			preLoaderRoute: typeof AuthWithAdminAuthAdminDashboardBorrowedBooksImport;
+			parentRoute: typeof AuthWithAdminAuthAdminDashboardImport;
+		};
+		"/auth/_withAdminAuth/admin/dashboard/logs": {
+			id: "/auth/_withAdminAuth/admin/dashboard/logs";
+			path: "/logs";
+			fullPath: "/auth/admin/dashboard/logs";
+			preLoaderRoute: typeof AuthWithAdminAuthAdminDashboardLogsImport;
+			parentRoute: typeof AuthWithAdminAuthAdminDashboardImport;
+		};
 		"/auth/_withAdminAuth/admin/delete/$": {
 			id: "/auth/_withAdminAuth/admin/delete/$";
 			path: "/$";
@@ -496,6 +565,27 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof AuthWithUserAuthUserBorrowBorrowImport;
 			parentRoute: typeof AuthWithUserAuthUserBorrowImport;
 		};
+		"/auth/_withUserAuth/user/dashboard/borrowedBooks": {
+			id: "/auth/_withUserAuth/user/dashboard/borrowedBooks";
+			path: "/borrowedBooks";
+			fullPath: "/auth/user/dashboard/borrowedBooks";
+			preLoaderRoute: typeof AuthWithUserAuthUserDashboardBorrowedBooksImport;
+			parentRoute: typeof AuthWithUserAuthUserDashboardImport;
+		};
+		"/auth/_withUserAuth/user/dashboard/deleteAccount": {
+			id: "/auth/_withUserAuth/user/dashboard/deleteAccount";
+			path: "/deleteAccount";
+			fullPath: "/auth/user/dashboard/deleteAccount";
+			preLoaderRoute: typeof AuthWithUserAuthUserDashboardDeleteAccountImport;
+			parentRoute: typeof AuthWithUserAuthUserDashboardImport;
+		};
+		"/auth/_withUserAuth/user/dashboard/statistics": {
+			id: "/auth/_withUserAuth/user/dashboard/statistics";
+			path: "/statistics";
+			fullPath: "/auth/user/dashboard/statistics";
+			preLoaderRoute: typeof AuthWithUserAuthUserDashboardStatisticsImport;
+			parentRoute: typeof AuthWithUserAuthUserDashboardImport;
+		};
 	}
 }
 
@@ -526,6 +616,27 @@ const AuthWithAdminAuthAdminBooksRouteWithChildren =
 		AuthWithAdminAuthAdminBooksRouteChildren,
 	);
 
+interface AuthWithAdminAuthAdminDashboardRouteChildren {
+	AuthWithAdminAuthAdminDashboardAddBooksRoute: typeof AuthWithAdminAuthAdminDashboardAddBooksRoute;
+	AuthWithAdminAuthAdminDashboardBorrowedBooksRoute: typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRoute;
+	AuthWithAdminAuthAdminDashboardLogsRoute: typeof AuthWithAdminAuthAdminDashboardLogsRoute;
+}
+
+const AuthWithAdminAuthAdminDashboardRouteChildren: AuthWithAdminAuthAdminDashboardRouteChildren =
+	{
+		AuthWithAdminAuthAdminDashboardAddBooksRoute:
+			AuthWithAdminAuthAdminDashboardAddBooksRoute,
+		AuthWithAdminAuthAdminDashboardBorrowedBooksRoute:
+			AuthWithAdminAuthAdminDashboardBorrowedBooksRoute,
+		AuthWithAdminAuthAdminDashboardLogsRoute:
+			AuthWithAdminAuthAdminDashboardLogsRoute,
+	};
+
+const AuthWithAdminAuthAdminDashboardRouteWithChildren =
+	AuthWithAdminAuthAdminDashboardRoute._addFileChildren(
+		AuthWithAdminAuthAdminDashboardRouteChildren,
+	);
+
 interface AuthWithAdminAuthAdminDeleteRouteChildren {
 	AuthWithAdminAuthAdminDeleteSplatRoute: typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	AuthWithAdminAuthAdminDeleteBookIdRoute: typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
@@ -550,7 +661,7 @@ const AuthWithAdminAuthAdminDeleteRouteWithChildren =
 interface AuthWithAdminAuthAdminRouteChildren {
 	AuthWithAdminAuthAdminSplatRoute: typeof AuthWithAdminAuthAdminSplatRoute;
 	AuthWithAdminAuthAdminBooksRoute: typeof AuthWithAdminAuthAdminBooksRouteWithChildren;
-	AuthWithAdminAuthAdminDashboardRoute: typeof AuthWithAdminAuthAdminDashboardRoute;
+	AuthWithAdminAuthAdminDashboardRoute: typeof AuthWithAdminAuthAdminDashboardRouteWithChildren;
 	AuthWithAdminAuthAdminDeleteRoute: typeof AuthWithAdminAuthAdminDeleteRouteWithChildren;
 	AuthWithAdminAuthAdminHomePageRoute: typeof AuthWithAdminAuthAdminHomePageRoute;
 }
@@ -560,7 +671,8 @@ const AuthWithAdminAuthAdminRouteChildren: AuthWithAdminAuthAdminRouteChildren =
 		AuthWithAdminAuthAdminSplatRoute: AuthWithAdminAuthAdminSplatRoute,
 		AuthWithAdminAuthAdminBooksRoute:
 			AuthWithAdminAuthAdminBooksRouteWithChildren,
-		AuthWithAdminAuthAdminDashboardRoute: AuthWithAdminAuthAdminDashboardRoute,
+		AuthWithAdminAuthAdminDashboardRoute:
+			AuthWithAdminAuthAdminDashboardRouteWithChildren,
 		AuthWithAdminAuthAdminDeleteRoute:
 			AuthWithAdminAuthAdminDeleteRouteWithChildren,
 		AuthWithAdminAuthAdminHomePageRoute: AuthWithAdminAuthAdminHomePageRoute,
@@ -616,11 +728,32 @@ const AuthWithUserAuthUserBorrowRouteWithChildren =
 		AuthWithUserAuthUserBorrowRouteChildren,
 	);
 
+interface AuthWithUserAuthUserDashboardRouteChildren {
+	AuthWithUserAuthUserDashboardBorrowedBooksRoute: typeof AuthWithUserAuthUserDashboardBorrowedBooksRoute;
+	AuthWithUserAuthUserDashboardDeleteAccountRoute: typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
+	AuthWithUserAuthUserDashboardStatisticsRoute: typeof AuthWithUserAuthUserDashboardStatisticsRoute;
+}
+
+const AuthWithUserAuthUserDashboardRouteChildren: AuthWithUserAuthUserDashboardRouteChildren =
+	{
+		AuthWithUserAuthUserDashboardBorrowedBooksRoute:
+			AuthWithUserAuthUserDashboardBorrowedBooksRoute,
+		AuthWithUserAuthUserDashboardDeleteAccountRoute:
+			AuthWithUserAuthUserDashboardDeleteAccountRoute,
+		AuthWithUserAuthUserDashboardStatisticsRoute:
+			AuthWithUserAuthUserDashboardStatisticsRoute,
+	};
+
+const AuthWithUserAuthUserDashboardRouteWithChildren =
+	AuthWithUserAuthUserDashboardRoute._addFileChildren(
+		AuthWithUserAuthUserDashboardRouteChildren,
+	);
+
 interface AuthWithUserAuthUserRouteChildren {
 	AuthWithUserAuthUserSplatRoute: typeof AuthWithUserAuthUserSplatRoute;
 	AuthWithUserAuthUserBooksRoute: typeof AuthWithUserAuthUserBooksRouteWithChildren;
 	AuthWithUserAuthUserBorrowRoute: typeof AuthWithUserAuthUserBorrowRouteWithChildren;
-	AuthWithUserAuthUserDashboardRoute: typeof AuthWithUserAuthUserDashboardRoute;
+	AuthWithUserAuthUserDashboardRoute: typeof AuthWithUserAuthUserDashboardRouteWithChildren;
 	AuthWithUserAuthUserHomePageRoute: typeof AuthWithUserAuthUserHomePageRoute;
 }
 
@@ -628,7 +761,8 @@ const AuthWithUserAuthUserRouteChildren: AuthWithUserAuthUserRouteChildren = {
 	AuthWithUserAuthUserSplatRoute: AuthWithUserAuthUserSplatRoute,
 	AuthWithUserAuthUserBooksRoute: AuthWithUserAuthUserBooksRouteWithChildren,
 	AuthWithUserAuthUserBorrowRoute: AuthWithUserAuthUserBorrowRouteWithChildren,
-	AuthWithUserAuthUserDashboardRoute: AuthWithUserAuthUserDashboardRoute,
+	AuthWithUserAuthUserDashboardRoute:
+		AuthWithUserAuthUserDashboardRouteWithChildren,
 	AuthWithUserAuthUserHomePageRoute: AuthWithUserAuthUserHomePageRoute,
 };
 
@@ -672,15 +806,18 @@ export interface FileRoutesByFullPath {
 	"/auth/user": typeof AuthWithUserAuthUserRouteWithChildren;
 	"/auth/admin/$": typeof AuthWithAdminAuthAdminSplatRoute;
 	"/auth/admin/books": typeof AuthWithAdminAuthAdminBooksRouteWithChildren;
-	"/auth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRoute;
+	"/auth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRouteWithChildren;
 	"/auth/admin/delete": typeof AuthWithAdminAuthAdminDeleteRouteWithChildren;
 	"/auth/admin/homePage": typeof AuthWithAdminAuthAdminHomePageRoute;
 	"/auth/user/$": typeof AuthWithUserAuthUserSplatRoute;
 	"/auth/user/books": typeof AuthWithUserAuthUserBooksRouteWithChildren;
 	"/auth/user/borrow": typeof AuthWithUserAuthUserBorrowRouteWithChildren;
-	"/auth/user/dashboard": typeof AuthWithUserAuthUserDashboardRoute;
+	"/auth/user/dashboard": typeof AuthWithUserAuthUserDashboardRouteWithChildren;
 	"/auth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
+	"/auth/admin/dashboard/addBooks": typeof AuthWithAdminAuthAdminDashboardAddBooksRoute;
+	"/auth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRoute;
+	"/auth/admin/dashboard/logs": typeof AuthWithAdminAuthAdminDashboardLogsRoute;
 	"/auth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
 	"/auth/admin/delete/message": typeof AuthWithAdminAuthAdminDeleteMessageRoute;
@@ -688,6 +825,9 @@ export interface FileRoutesByFullPath {
 	"/auth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
 	"/auth/user/borrow/borrow": typeof AuthWithUserAuthUserBorrowBorrowRoute;
+	"/auth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRoute;
+	"/auth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
+	"/auth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
 }
 
 export interface FileRoutesByTo {
@@ -704,15 +844,18 @@ export interface FileRoutesByTo {
 	"/auth/user": typeof AuthWithUserAuthUserRouteWithChildren;
 	"/auth/admin/$": typeof AuthWithAdminAuthAdminSplatRoute;
 	"/auth/admin/books": typeof AuthWithAdminAuthAdminBooksRouteWithChildren;
-	"/auth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRoute;
+	"/auth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRouteWithChildren;
 	"/auth/admin/delete": typeof AuthWithAdminAuthAdminDeleteRouteWithChildren;
 	"/auth/admin/homePage": typeof AuthWithAdminAuthAdminHomePageRoute;
 	"/auth/user/$": typeof AuthWithUserAuthUserSplatRoute;
 	"/auth/user/books": typeof AuthWithUserAuthUserBooksRouteWithChildren;
 	"/auth/user/borrow": typeof AuthWithUserAuthUserBorrowRouteWithChildren;
-	"/auth/user/dashboard": typeof AuthWithUserAuthUserDashboardRoute;
+	"/auth/user/dashboard": typeof AuthWithUserAuthUserDashboardRouteWithChildren;
 	"/auth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
+	"/auth/admin/dashboard/addBooks": typeof AuthWithAdminAuthAdminDashboardAddBooksRoute;
+	"/auth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRoute;
+	"/auth/admin/dashboard/logs": typeof AuthWithAdminAuthAdminDashboardLogsRoute;
 	"/auth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
 	"/auth/admin/delete/message": typeof AuthWithAdminAuthAdminDeleteMessageRoute;
@@ -720,6 +863,9 @@ export interface FileRoutesByTo {
 	"/auth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
 	"/auth/user/borrow/borrow": typeof AuthWithUserAuthUserBorrowBorrowRoute;
+	"/auth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRoute;
+	"/auth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
+	"/auth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
 }
 
 export interface FileRoutesById {
@@ -739,15 +885,18 @@ export interface FileRoutesById {
 	"/auth/_withUserAuth/user": typeof AuthWithUserAuthUserRouteWithChildren;
 	"/auth/_withAdminAuth/admin/$": typeof AuthWithAdminAuthAdminSplatRoute;
 	"/auth/_withAdminAuth/admin/books": typeof AuthWithAdminAuthAdminBooksRouteWithChildren;
-	"/auth/_withAdminAuth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRoute;
+	"/auth/_withAdminAuth/admin/dashboard": typeof AuthWithAdminAuthAdminDashboardRouteWithChildren;
 	"/auth/_withAdminAuth/admin/delete": typeof AuthWithAdminAuthAdminDeleteRouteWithChildren;
 	"/auth/_withAdminAuth/admin/homePage": typeof AuthWithAdminAuthAdminHomePageRoute;
 	"/auth/_withUserAuth/user/$": typeof AuthWithUserAuthUserSplatRoute;
 	"/auth/_withUserAuth/user/books": typeof AuthWithUserAuthUserBooksRouteWithChildren;
 	"/auth/_withUserAuth/user/borrow": typeof AuthWithUserAuthUserBorrowRouteWithChildren;
-	"/auth/_withUserAuth/user/dashboard": typeof AuthWithUserAuthUserDashboardRoute;
+	"/auth/_withUserAuth/user/dashboard": typeof AuthWithUserAuthUserDashboardRouteWithChildren;
 	"/auth/_withUserAuth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/_withAdminAuth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
+	"/auth/_withAdminAuth/admin/dashboard/addBooks": typeof AuthWithAdminAuthAdminDashboardAddBooksRoute;
+	"/auth/_withAdminAuth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRoute;
+	"/auth/_withAdminAuth/admin/dashboard/logs": typeof AuthWithAdminAuthAdminDashboardLogsRoute;
 	"/auth/_withAdminAuth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/_withAdminAuth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
 	"/auth/_withAdminAuth/admin/delete/message": typeof AuthWithAdminAuthAdminDeleteMessageRoute;
@@ -755,6 +904,9 @@ export interface FileRoutesById {
 	"/auth/_withUserAuth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/_withUserAuth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
 	"/auth/_withUserAuth/user/borrow/borrow": typeof AuthWithUserAuthUserBorrowBorrowRoute;
+	"/auth/_withUserAuth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRoute;
+	"/auth/_withUserAuth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
+	"/auth/_withUserAuth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
 }
 
 export interface FileRouteTypes {
@@ -782,13 +934,19 @@ export interface FileRouteTypes {
 		| "/auth/user/dashboard"
 		| "/auth/user/homePage"
 		| "/auth/admin/books/$bookId"
+		| "/auth/admin/dashboard/addBooks"
+		| "/auth/admin/dashboard/borrowedBooks"
+		| "/auth/admin/dashboard/logs"
 		| "/auth/admin/delete/$"
 		| "/auth/admin/delete/$bookId"
 		| "/auth/admin/delete/message"
 		| "/auth/user/books/$bookId"
 		| "/auth/user/borrow/$"
 		| "/auth/user/borrow/$bookId"
-		| "/auth/user/borrow/borrow";
+		| "/auth/user/borrow/borrow"
+		| "/auth/user/dashboard/borrowedBooks"
+		| "/auth/user/dashboard/deleteAccount"
+		| "/auth/user/dashboard/statistics";
 	fileRoutesByTo: FileRoutesByTo;
 	to:
 		| "/"
@@ -813,13 +971,19 @@ export interface FileRouteTypes {
 		| "/auth/user/dashboard"
 		| "/auth/user/homePage"
 		| "/auth/admin/books/$bookId"
+		| "/auth/admin/dashboard/addBooks"
+		| "/auth/admin/dashboard/borrowedBooks"
+		| "/auth/admin/dashboard/logs"
 		| "/auth/admin/delete/$"
 		| "/auth/admin/delete/$bookId"
 		| "/auth/admin/delete/message"
 		| "/auth/user/books/$bookId"
 		| "/auth/user/borrow/$"
 		| "/auth/user/borrow/$bookId"
-		| "/auth/user/borrow/borrow";
+		| "/auth/user/borrow/borrow"
+		| "/auth/user/dashboard/borrowedBooks"
+		| "/auth/user/dashboard/deleteAccount"
+		| "/auth/user/dashboard/statistics";
 	id:
 		| "__root__"
 		| "/"
@@ -846,13 +1010,19 @@ export interface FileRouteTypes {
 		| "/auth/_withUserAuth/user/dashboard"
 		| "/auth/_withUserAuth/user/homePage"
 		| "/auth/_withAdminAuth/admin/books/$bookId"
+		| "/auth/_withAdminAuth/admin/dashboard/addBooks"
+		| "/auth/_withAdminAuth/admin/dashboard/borrowedBooks"
+		| "/auth/_withAdminAuth/admin/dashboard/logs"
 		| "/auth/_withAdminAuth/admin/delete/$"
 		| "/auth/_withAdminAuth/admin/delete/$bookId"
 		| "/auth/_withAdminAuth/admin/delete/message"
 		| "/auth/_withUserAuth/user/books/$bookId"
 		| "/auth/_withUserAuth/user/borrow/$"
 		| "/auth/_withUserAuth/user/borrow/$bookId"
-		| "/auth/_withUserAuth/user/borrow/borrow";
+		| "/auth/_withUserAuth/user/borrow/borrow"
+		| "/auth/_withUserAuth/user/dashboard/borrowedBooks"
+		| "/auth/_withUserAuth/user/dashboard/deleteAccount"
+		| "/auth/_withUserAuth/user/dashboard/statistics";
 	fileRoutesById: FileRoutesById;
 }
 
@@ -982,7 +1152,12 @@ export const routeTree = rootRoute
     },
     "/auth/_withAdminAuth/admin/dashboard": {
       "filePath": "auth/_withAdminAuth/admin/dashboard.tsx",
-      "parent": "/auth/_withAdminAuth/admin"
+      "parent": "/auth/_withAdminAuth/admin",
+      "children": [
+        "/auth/_withAdminAuth/admin/dashboard/addBooks",
+        "/auth/_withAdminAuth/admin/dashboard/borrowedBooks",
+        "/auth/_withAdminAuth/admin/dashboard/logs"
+      ]
     },
     "/auth/_withAdminAuth/admin/delete": {
       "filePath": "auth/_withAdminAuth/admin/delete.tsx",
@@ -1019,7 +1194,12 @@ export const routeTree = rootRoute
     },
     "/auth/_withUserAuth/user/dashboard": {
       "filePath": "auth/_withUserAuth/user/dashboard.tsx",
-      "parent": "/auth/_withUserAuth/user"
+      "parent": "/auth/_withUserAuth/user",
+      "children": [
+        "/auth/_withUserAuth/user/dashboard/borrowedBooks",
+        "/auth/_withUserAuth/user/dashboard/deleteAccount",
+        "/auth/_withUserAuth/user/dashboard/statistics"
+      ]
     },
     "/auth/_withUserAuth/user/homePage": {
       "filePath": "auth/_withUserAuth/user/homePage.tsx",
@@ -1028,6 +1208,18 @@ export const routeTree = rootRoute
     "/auth/_withAdminAuth/admin/books/$bookId": {
       "filePath": "auth/_withAdminAuth/admin/books/$bookId.tsx",
       "parent": "/auth/_withAdminAuth/admin/books"
+    },
+    "/auth/_withAdminAuth/admin/dashboard/addBooks": {
+      "filePath": "auth/_withAdminAuth/admin/dashboard/addBooks.tsx",
+      "parent": "/auth/_withAdminAuth/admin/dashboard"
+    },
+    "/auth/_withAdminAuth/admin/dashboard/borrowedBooks": {
+      "filePath": "auth/_withAdminAuth/admin/dashboard/borrowedBooks.tsx",
+      "parent": "/auth/_withAdminAuth/admin/dashboard"
+    },
+    "/auth/_withAdminAuth/admin/dashboard/logs": {
+      "filePath": "auth/_withAdminAuth/admin/dashboard/logs.tsx",
+      "parent": "/auth/_withAdminAuth/admin/dashboard"
     },
     "/auth/_withAdminAuth/admin/delete/$": {
       "filePath": "auth/_withAdminAuth/admin/delete/$.tsx",
@@ -1056,6 +1248,18 @@ export const routeTree = rootRoute
     "/auth/_withUserAuth/user/borrow/borrow": {
       "filePath": "auth/_withUserAuth/user/borrow/borrow.tsx",
       "parent": "/auth/_withUserAuth/user/borrow"
+    },
+    "/auth/_withUserAuth/user/dashboard/borrowedBooks": {
+      "filePath": "auth/_withUserAuth/user/dashboard/borrowedBooks.tsx",
+      "parent": "/auth/_withUserAuth/user/dashboard"
+    },
+    "/auth/_withUserAuth/user/dashboard/deleteAccount": {
+      "filePath": "auth/_withUserAuth/user/dashboard/deleteAccount.tsx",
+      "parent": "/auth/_withUserAuth/user/dashboard"
+    },
+    "/auth/_withUserAuth/user/dashboard/statistics": {
+      "filePath": "auth/_withUserAuth/user/dashboard/statistics.tsx",
+      "parent": "/auth/_withUserAuth/user/dashboard"
     }
   }
 }

@@ -16,7 +16,7 @@ export const CollapsibleAccordion = ({
 	return (
 		<>
 			{role === "user" ? <UserNavBar /> : <AdminNavBar />}
-			<header className="text-right text-[16px] p-2">
+			<header className="md:text-right text-[16px] p-2">
 				<p>
 					{role} : {name}
 				</p>

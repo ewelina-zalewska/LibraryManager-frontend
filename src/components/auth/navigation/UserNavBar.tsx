@@ -34,7 +34,7 @@ export const UserNavBar = () => {
 				</div>
 			</div>
 			<header
-				className={`absolute top-[-300px] md:top-0 bg-body rounded-b-lg md:static h-[300px] md:h-auto w-full flex md:flex-row flex-col justify-between items-center px-nav-x py-nav-y text-nav shadow-light md:shadow-none ${open ? "translate-y-[100%] md:translate-y-0" : null} transition duration-500 linear`}
+				className={`absolute top-[-350px] md:top-0 bg-body rounded-b-lg md:static h-[350px] md:h-auto w-full flex md:flex-row flex-col justify-between items-center px-nav-x py-nav-y text-nav shadow-light md:shadow-none ${open ? "translate-y-[100%] md:translate-y-0" : null} transition duration-500 linear`}
 			>
 				<h1 className="font-normal text-title bg-radial-[at_1%_95%] from-orange-500 to-bold-900 to-65% p-title rounded-lg">
 					{title}
