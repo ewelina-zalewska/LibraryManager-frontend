@@ -60,6 +60,16 @@ export const SingleBook = (role: "admin" | "user") => {
 							Borrow
 						</Link>
 					) : null}
+					{admin ? (
+						<Link
+							to="/auth/admin/delete/$bookId"
+							params={{ bookId: book.id }}
+							search={{ status: `confirm you want to delete item ${book.id}` }}
+							className="bg-radial-[at_1%_95%] from-orange-500 to-bold-900 to-65% shadow-lightBorder py-2 px-4 rounded-xl hover:font-bold"
+						>
+							Delete
+						</Link>
+					) : null}
 				</div>
 				<LinkToPage link="../" title="Go Back"></LinkToPage>
 			</ModalBox>
