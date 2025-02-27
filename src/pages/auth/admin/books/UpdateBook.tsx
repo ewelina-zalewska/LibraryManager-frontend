@@ -58,7 +58,6 @@ export const UpdateBook = () => {
 		const { newErrors, isSuccess } = validateBook(formState);
 		setErrors(newErrors);
 		setSuccess(isSuccess);
-		console.log(newErrors, isSuccess);
 		if (!isSuccess) {
 			setSubmitClicked(true);
 		} else if (isSuccess) {
