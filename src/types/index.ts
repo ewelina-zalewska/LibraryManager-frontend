@@ -50,6 +50,15 @@ export type UserBookFormFieldsetProps = {
 	errors: UpdateBookFormErrors;
 	borrowedbooks: number;
 };
+export type Book = {
+	id: string;
+	title: string;
+	author: string;
+	copies: number;
+	description: string;
+	releaseDate: string;
+	numberOfborrowedBooks: number;
+};
 
 export type BookResponse = {
 	id: string;
@@ -67,6 +76,11 @@ export type BookCopiesDto = {
 	copies: number;
 	numberOfborrowedBooks: number;
 };
+
+export type BookObjectResponse = {
+	books: Book[];
+};
+
 export type BorrowedBookDto = {
 	status: "Borrowed";
 	bookId: string;
@@ -87,6 +101,22 @@ export type PaginatedBooks = {
 
 //Log
 
+export type Log = {
+	action:
+		| "Registration"
+		| "Account deletion"
+		| "Login"
+		| "Logout"
+		| "Borrowing a book"
+		| "Returning the borrowed book"
+		| "Delete Book"
+		| "Update Book"
+		| "Adding a book";
+	bookId: string | null;
+	created_on: string;
+	created_at: string;
+	userID: string;
+};
 export type LogDto = {
 	action:
 		| "Registration"
@@ -96,11 +126,16 @@ export type LogDto = {
 		| "Borrowing a book"
 		| "Returning the borrowed book"
 		| "Delete Book"
-		| "Update Book";
+		| "Update Book"
+		| "Adding a book";
 	bookId: string | null;
 	created_on: string;
 	created_at: string;
 	userID: string;
+};
+
+export type LogResponse = {
+	logs: Log[];
 };
 
 //
@@ -124,6 +159,7 @@ export type ResponseMessage = {
 	id?: string;
 	role?: "user" | "admin";
 	name?: string;
+	data?: BookResponse[];
 };
 
 //Login

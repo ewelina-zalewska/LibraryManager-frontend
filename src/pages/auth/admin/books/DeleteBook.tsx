@@ -33,7 +33,13 @@ export const DeleteBook = () => {
 				return response.json();
 			})
 			.then((data: ResponseMessage) => {
-				if (data.status === "success") setResponse(data);
+				console.log(data);
+				if (data.status === "success") {
+					setResponse(data);
+					if (data.data) {
+						data.data.filter((book) => book.id !== bookId);
+					}
+				}
 			})
 			.catch((error) => Promise.reject(`Error: ${error}`));
 	};

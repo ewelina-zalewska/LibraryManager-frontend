@@ -1,7 +1,7 @@
 ﻿import { FormEvent, useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
-import { useUpdateBookMutation } from "@/mutations/useUpdateBookMutation";
+import { useUpdateCopiesMutation } from "@/mutations/useUpdateCopiesMutation";
 import { bookQueryOptions } from "@/queries/bookQuery";
 import { ResponseMessage } from "@/types";
 import { useSuccess } from "@/hooks/useSuccess";
@@ -19,7 +19,7 @@ export const BorrowBook = () => {
 
 	const [response, setResponse] = useState<ResponseMessage | null>(null);
 	const { mutate: EDIT_COPIES, data: CHANGE_COPIES_MESSAGE } =
-		useUpdateBookMutation(bookId);
+		useUpdateCopiesMutation(bookId);
 
 	const {
 		mutate: ADD_BORROWED_BOOK,
@@ -30,6 +30,7 @@ export const BorrowBook = () => {
 
 	const BORROW_BOOK = (e: FormEvent) => {
 		e.preventDefault();
+		if (!book.copies) return;
 		ADD_BORROWED_BOOK({
 			status: "Borrowed",
 			bookId,

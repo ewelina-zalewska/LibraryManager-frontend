@@ -8,9 +8,10 @@ import { AdminDashBoardNavbar } from "@/components/auth/navigation/AdminDashboar
 export const TheDashboard = () => {
 	const userData = useContext(UserDataContext);
 	const { role } = userData;
+
 	return (
 		<CollapsibleAccordion user={userData}>
-			{role ? <AdminDashBoardNavbar /> : <UserDashBoardNavbar />}
+			{role === "admin" ? <AdminDashBoardNavbar /> : <UserDashBoardNavbar />}
 			<Outlet />
 		</CollapsibleAccordion>
 	);

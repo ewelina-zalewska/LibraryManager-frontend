@@ -1,4 +1,4 @@
-﻿import { useMemo, useState, useContext } from "react";
+﻿import { useState, useContext, useEffect } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, Outlet } from "@tanstack/react-router";
 import { booksQueryOptions } from "@/queries/booksQuery";
@@ -14,33 +14,36 @@ const booksRoute = getRouteApi("/auth/_withAdminAuth/admin/books");
 export const BooksList = () => {
 	const userData = useContext(UserDataContext);
 	const booksPerPage = 8;
-
 	const { page: currentPage } = booksRoute.useSearch();
 
-	const { data: allBooks } = useSuspenseQuery(booksQueryOptions);
+	const { data } = useSuspenseQuery(booksQueryOptions);
+	const { books } = data;
+	const [filteredBooks, setFilteredBooks] = useState<BookResponse[]>(books);
+	const [BOOKS_DATA, setBOOKS_DATA] = useState<BookResponse[]>(books);
 
-	const [filteredBooks, setFilteredBooks] = useState<BookResponse[]>(allBooks);
+	const [formState, setFormState] = useState<string>("");
+	const HANDLE_CHANGE = (e: FormChangeEvent) => setFormState(e.target.value);
 
-	const GET_FILTERED_BOOKS = (filterText: string) =>
-		allBooks.filter(
+	useEffect(() => {
+		const filterArray = books.filter(
 			(book) =>
-				book.author.toLowerCase().includes(filterText.toLowerCase()) ||
-				book.title.toLowerCase().includes(filterText.toLowerCase()),
+				book.author.toLowerCase().includes(formState.toLowerCase()) ||
+				book.title.toLowerCase().includes(formState.toLowerCase()),
 		);
+		setFilteredBooks(filterArray);
+	}, [formState]);
 
-	const FILTER_BOOKS = (e: FormChangeEvent) => {
-		const filterText = e.currentTarget.value;
-		const filteredBooks = GET_FILTERED_BOOKS(filterText);
-		setFilteredBooks(filteredBooks);
-	};
+	useEffect(() => {
+		const filteredData = () => {
+			const filteredBooksPerPage = filteredBooks.slice(
+				(currentPage - 1) * booksPerPage,
+				(currentPage - 1) * booksPerPage + booksPerPage,
+			);
+			return filteredBooksPerPage;
+		};
 
-	const BOOKS_DATA = useMemo(() => {
-		const filteredBooksPerPage = filteredBooks.slice(
-			(currentPage - 1) * booksPerPage,
-			(currentPage - 1) * booksPerPage + booksPerPage,
-		);
-		return filteredBooksPerPage;
-	}, [currentPage, filteredBooks]);
+		setBOOKS_DATA(filteredData);
+	}, [filteredBooks, currentPage]);
 
 	return (
 		<CollapsibleAccordion user={userData}>
@@ -49,7 +52,8 @@ export const BooksList = () => {
 					type="text"
 					name="search"
 					placeholder="search title or author"
-					onChange={FILTER_BOOKS}
+					onChange={HANDLE_CHANGE}
+					value={formState}
 					width={400}
 				/>
 			</div>
