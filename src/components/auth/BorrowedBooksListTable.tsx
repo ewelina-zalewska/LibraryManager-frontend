@@ -3,7 +3,9 @@ import { BorrowedBook } from "@/types";
 
 type BooksListTableProps = {
 	filteredBooks: BorrowedBook[];
-	url: string;
+	url:
+		| "/auth/user/dashboard/borrowedBooks/$bookId"
+		| "/auth/admin/dashboard/borrowedBooks/$bookId";
 };
 
 export const BorrowedBooksListTable = ({
@@ -38,9 +40,10 @@ export const BorrowedBooksListTable = ({
 						className="border-b border-b-gray-800 hover:bg-gray-800"
 					>
 						<td
-							className={`${singleBookStyle} ${currentDate > new Date(book.deadline).getTime() ? "text-error" : null}`}
+							className={`${singleBookStyle} ${currentDate > new Date(book.deadline).getTime() && book.status !== "Returned" ? "text-error" : null}`}
 						>
-							{currentDate > new Date(book.deadline).getTime()
+							{currentDate > new Date(book.deadline).getTime() &&
+							book.status !== "Returned"
 								? "Not returned"
 								: book.status}
 						</td>

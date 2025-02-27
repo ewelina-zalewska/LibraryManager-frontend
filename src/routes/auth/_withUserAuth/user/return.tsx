@@ -4,7 +4,7 @@ import { DataLoading } from "@/components/handleData/DataLoading";
 import { TheError } from "@/components/handleData/TheError";
 import { PageNotFound } from "@/components/handleData/PageNotFound";
 
-export const Route = createFileRoute("/auth/_withUserAuth/user/borrow/borrow")({
+export const Route = createFileRoute("/auth/_withUserAuth/user/return")({
 	component: TheOutlet,
 	notFoundComponent: () => PageNotFound("Page"),
 	pendingComponent: DataLoading,

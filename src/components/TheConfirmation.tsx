@@ -41,7 +41,9 @@ export const TheConfirmation = ({
 				<p
 					className={`${response?.status === "success" ? "text-green" : "text-error"}`}
 				>
-					{response?.message}
+					{action === "return"
+						? "The book has been returned successfully"
+						: response?.message}
 				</p>
 			)}
 			<LinkToPage link={link} title="Go Back" />

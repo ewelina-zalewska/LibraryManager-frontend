@@ -1,24 +1,21 @@
 ﻿import { useSuspenseQuery } from "@tanstack/react-query";
-import { Outlet } from "@tanstack/react-router";
+import { Link, Outlet } from "@tanstack/react-router";
 import { borrowedBoookQueryOptions } from "@/queries/borrowedBookQuery";
 import { ModalBox } from "@/components/ModalBox";
 import { LinkToPage } from "@/components/navigation/LinkToPage";
 import { getRouteApi } from "@tanstack/react-router";
-import { TheButton } from "@/components/navigation/TheButton";
-import { FormEvent, useEffect, useState } from "react";
 import { checkDeadlineExceeded } from "@/utils/checkDeadlineExceeded";
-import { useUpdateBookNoticeMutation } from "@/mutations/useUpdateBookNoticeMutation";
 
 const booksRoute = getRouteApi(
-	"/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId",
+	"/auth/_withUserAuth/user/dashboard/borrowedBooks/$bookId",
 );
 
 export const SingleBorrowedBook = () => {
 	const { bookId } = booksRoute.useParams();
 	const { data: book } = useSuspenseQuery(borrowedBoookQueryOptions(bookId));
 	const {
+		id,
 		status,
-		userId,
 		title,
 		author,
 		borrowed_on,
@@ -27,32 +24,13 @@ export const SingleBorrowedBook = () => {
 		notice,
 	} = book;
 
-	const {
-		mutate: CHANGE_NOTICE,
-		data,
-		isPending,
-	} = useUpdateBookNoticeMutation(bookId);
 	const isExceeded = checkDeadlineExceeded(deadline);
-	const [isNotice, setNotice] = useState<boolean>(false);
-
-	const SEND_NOTICE = (e: FormEvent) => {
-		e.preventDefault();
-		CHANGE_NOTICE({
-			notice: true,
-		});
-	};
 
 	const descriptionContainerStyle =
 		"flex w-full hover:text-orange-400 cursor-pointer";
 	const titleStyle = "min-w-[150px]";
 	const descriptionStyle = "flex-grow text-center";
 
-	useEffect(() => {
-		if (!data) return;
-		if (data.status === "success") setNotice(true);
-	}, [data]);
-
-	const hideButton = notice || isNotice;
 	return (
 		<>
 			<ModalBox width={500} height={600}>
@@ -76,10 +54,6 @@ export const SingleBorrowedBook = () => {
 						<p className={descriptionStyle}>{author}</p>
 					</div>
 					<div className={descriptionContainerStyle}>
-						<p className={titleStyle}>Borrowed by:</p>
-						<p className={descriptionStyle}>{userId}</p>
-					</div>
-					<div className={descriptionContainerStyle}>
 						<p className={titleStyle}>Borrowed on:</p>
 						<p className={descriptionStyle}>
 							{borrowed_on} at {borrowed_at}
@@ -100,20 +74,22 @@ export const SingleBorrowedBook = () => {
 					<div className={descriptionContainerStyle}>
 						<p className={titleStyle}>Notice</p>
 						<p className={descriptionStyle}>
-							{isNotice || notice ? "Please return the book" : null}
+							{notice ? "Please return the book" : null}
 						</p>
 					</div>
-					{isExceeded && (
-						<TheButton
-							btnLabel="Send notice"
-							disabled={isPending || hideButton}
-							onClick={SEND_NOTICE}
-						/>
+					{book.status !== "Returned" && (
+						<Link
+							to="/auth/user/return/$bookId"
+							params={{ bookId: id }}
+							className="bg-radial-[at_1%_95%] from-orange-500 to-bold-900 to-65% shadow-lightBorder py-2 px-4 rounded-xl hover:font-bold"
+						>
+							Return
+						</Link>
 					)}
 				</div>
-				{isNotice && <p className="text-green">"The notice has been added."</p>}
+
 				<LinkToPage
-					link="/auth/admin/dashboard/borrowedBooks"
+					link="/auth/user/dashboard/borrowedBooks"
 					title="Go Back"
 				></LinkToPage>
 			</ModalBox>

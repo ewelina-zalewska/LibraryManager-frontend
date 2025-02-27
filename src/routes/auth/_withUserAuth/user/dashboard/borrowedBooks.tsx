@@ -1,14 +1,22 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { BorrowedBooks } from "@/pages/auth/user/dashboard/BorrowedBooks";
 import { DataLoading } from "@/components/handleData/DataLoading";
 import { TheError } from "@/components/handleData/TheError";
-import { PageNotFound } from "@/components/handleData/PageNotFound";
+import { borrowedBooksQueryOptions } from "@/queries/borrowedBooksQuery";
+
+type BooksSearch = {
+	page: number;
+};
 
 export const Route = createFileRoute(
 	"/auth/_withUserAuth/user/dashboard/borrowedBooks",
 )({
-	component: BorrowedBooks,
-	notFoundComponent: () => PageNotFound("Books"),
+	validateSearch: (search: Record<string, unknown>): BooksSearch => ({
+		page: Number(search?.page ?? 1),
+	}),
+	loader: ({ context }) => {
+		const { queryClient } = context;
+		return queryClient.ensureQueryData(borrowedBooksQueryOptions);
+	},
 	pendingComponent: DataLoading,
 	errorComponent: TheError,
 });

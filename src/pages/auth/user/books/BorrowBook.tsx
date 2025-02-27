@@ -18,8 +18,7 @@ export const BorrowBook = () => {
 	const goBackRoute = `/auth/user/books/${bookId}`;
 
 	const [response, setResponse] = useState<ResponseMessage | null>(null);
-	const { mutate: EDIT_COPIES, data: CHANGE_COPIES_MESSAGE } =
-		useUpdateCopiesMutation(bookId);
+	const { mutate: EDIT_COPIES } = useUpdateCopiesMutation(bookId);
 
 	const {
 		mutate: ADD_BORROWED_BOOK,
@@ -50,13 +49,7 @@ export const BorrowBook = () => {
 			});
 			setSuccess(true);
 		} else setSuccess(false);
-		console.log(CHANGE_COPIES_MESSAGE?.status, CHANGE_COPIES_MESSAGE?.message);
 	}, [NEW_BORROWED_BOOK_MESSAGE]);
-
-	useEffect(() => {
-		if (!CHANGE_COPIES_MESSAGE) return;
-		console.log(CHANGE_COPIES_MESSAGE?.status, CHANGE_COPIES_MESSAGE?.message);
-	}, [CHANGE_COPIES_MESSAGE]);
 
 	return (
 		<TheConfirmation
