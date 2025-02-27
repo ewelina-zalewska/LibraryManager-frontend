@@ -81,12 +81,33 @@ export type BookObjectResponse = {
 	books: Book[];
 };
 
+export type BorrowedBook = {
+	id: string;
+	status: "Borrowed" | "Returned" | "Not returned";
+	userId: string;
+	bookId: string;
+	title: string;
+	author: string;
+	releaseDate: string;
+	borrowed_on: string;
+	borrowed_at: string;
+	returned_on: string | null;
+	returned_at: string | null;
+	deadline: string;
+	deadlineExceeded: boolean;
+	notice: boolean;
+};
+export type BorrowedBookDataDto = BorrowedBook;
 export type BorrowedBookDto = {
 	status: "Borrowed";
 	bookId: string;
 	title: string;
 	author: string;
 	releaseDate: string;
+};
+
+export type borrowedBookObjectResponse = {
+	borrowedBooks: BorrowedBook[];
 };
 
 export type PaginatedBooks = {

@@ -51,6 +51,7 @@ import { Route as AuthWithAdminAuthAdminDashboardLogsImport } from "./routes/aut
 import { Route as AuthWithAdminAuthAdminDashboardBorrowedBooksImport } from "./routes/auth/_withAdminAuth/admin/dashboard/borrowedBooks";
 import { Route as AuthWithAdminAuthAdminDashboardAddBooksImport } from "./routes/auth/_withAdminAuth/admin/dashboard/addBooks";
 import { Route as AuthWithAdminAuthAdminBooksBookIdImport } from "./routes/auth/_withAdminAuth/admin/books/$bookId";
+import { Route as AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdImport } from "./routes/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId";
 
 // Create Virtual Routes
 
@@ -323,7 +324,11 @@ const AuthWithAdminAuthAdminDashboardBorrowedBooksRoute =
 		id: "/borrowedBooks",
 		path: "/borrowedBooks",
 		getParentRoute: () => AuthWithAdminAuthAdminDashboardRoute,
-	} as any);
+	} as any).lazy(() =>
+		import(
+			"./routes/auth/_withAdminAuth/admin/dashboard/borrowedBooks.lazy"
+		).then((d) => d.Route),
+	);
 
 const AuthWithAdminAuthAdminDashboardAddBooksRoute =
 	AuthWithAdminAuthAdminDashboardAddBooksImport.update({
@@ -341,6 +346,17 @@ const AuthWithAdminAuthAdminBooksBookIdRoute =
 		import("./routes/auth/_withAdminAuth/admin/books/$bookId.lazy").then(
 			(d) => d.Route,
 		),
+	);
+
+const AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute =
+	AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdImport.update({
+		id: "/$bookId",
+		path: "/$bookId",
+		getParentRoute: () => AuthWithAdminAuthAdminDashboardBorrowedBooksRoute,
+	} as any).lazy(() =>
+		import(
+			"./routes/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId.lazy"
+		).then((d) => d.Route),
 	);
 
 // Populate the FileRoutesByPath interface
@@ -620,6 +636,13 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof AuthWithUserAuthUserDashboardStatisticsImport;
 			parentRoute: typeof AuthWithUserAuthUserDashboardImport;
 		};
+		"/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId": {
+			id: "/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId";
+			path: "/$bookId";
+			fullPath: "/auth/admin/dashboard/borrowedBooks/$bookId";
+			preLoaderRoute: typeof AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdImport;
+			parentRoute: typeof AuthWithAdminAuthAdminDashboardBorrowedBooksImport;
+		};
 	}
 }
 
@@ -650,9 +673,24 @@ const AuthWithAdminAuthAdminBooksRouteWithChildren =
 		AuthWithAdminAuthAdminBooksRouteChildren,
 	);
 
+interface AuthWithAdminAuthAdminDashboardBorrowedBooksRouteChildren {
+	AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute: typeof AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute;
+}
+
+const AuthWithAdminAuthAdminDashboardBorrowedBooksRouteChildren: AuthWithAdminAuthAdminDashboardBorrowedBooksRouteChildren =
+	{
+		AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute:
+			AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute,
+	};
+
+const AuthWithAdminAuthAdminDashboardBorrowedBooksRouteWithChildren =
+	AuthWithAdminAuthAdminDashboardBorrowedBooksRoute._addFileChildren(
+		AuthWithAdminAuthAdminDashboardBorrowedBooksRouteChildren,
+	);
+
 interface AuthWithAdminAuthAdminDashboardRouteChildren {
 	AuthWithAdminAuthAdminDashboardAddBooksRoute: typeof AuthWithAdminAuthAdminDashboardAddBooksRoute;
-	AuthWithAdminAuthAdminDashboardBorrowedBooksRoute: typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRoute;
+	AuthWithAdminAuthAdminDashboardBorrowedBooksRoute: typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRouteWithChildren;
 	AuthWithAdminAuthAdminDashboardLogsRoute: typeof AuthWithAdminAuthAdminDashboardLogsRoute;
 }
 
@@ -661,7 +699,7 @@ const AuthWithAdminAuthAdminDashboardRouteChildren: AuthWithAdminAuthAdminDashbo
 		AuthWithAdminAuthAdminDashboardAddBooksRoute:
 			AuthWithAdminAuthAdminDashboardAddBooksRoute,
 		AuthWithAdminAuthAdminDashboardBorrowedBooksRoute:
-			AuthWithAdminAuthAdminDashboardBorrowedBooksRoute,
+			AuthWithAdminAuthAdminDashboardBorrowedBooksRouteWithChildren,
 		AuthWithAdminAuthAdminDashboardLogsRoute:
 			AuthWithAdminAuthAdminDashboardLogsRoute,
 	};
@@ -869,7 +907,7 @@ export interface FileRoutesByFullPath {
 	"/auth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
 	"/auth/admin/dashboard/addBooks": typeof AuthWithAdminAuthAdminDashboardAddBooksRoute;
-	"/auth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRoute;
+	"/auth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRouteWithChildren;
 	"/auth/admin/dashboard/logs": typeof AuthWithAdminAuthAdminDashboardLogsRoute;
 	"/auth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
@@ -882,6 +920,7 @@ export interface FileRoutesByFullPath {
 	"/auth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRoute;
 	"/auth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
 	"/auth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
+	"/auth/admin/dashboard/borrowedBooks/$bookId": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute;
 }
 
 export interface FileRoutesByTo {
@@ -909,7 +948,7 @@ export interface FileRoutesByTo {
 	"/auth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
 	"/auth/admin/dashboard/addBooks": typeof AuthWithAdminAuthAdminDashboardAddBooksRoute;
-	"/auth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRoute;
+	"/auth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRouteWithChildren;
 	"/auth/admin/dashboard/logs": typeof AuthWithAdminAuthAdminDashboardLogsRoute;
 	"/auth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
@@ -922,6 +961,7 @@ export interface FileRoutesByTo {
 	"/auth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRoute;
 	"/auth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
 	"/auth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
+	"/auth/admin/dashboard/borrowedBooks/$bookId": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute;
 }
 
 export interface FileRoutesById {
@@ -952,7 +992,7 @@ export interface FileRoutesById {
 	"/auth/_withUserAuth/user/homePage": typeof AuthWithUserAuthUserHomePageRoute;
 	"/auth/_withAdminAuth/admin/books/$bookId": typeof AuthWithAdminAuthAdminBooksBookIdRoute;
 	"/auth/_withAdminAuth/admin/dashboard/addBooks": typeof AuthWithAdminAuthAdminDashboardAddBooksRoute;
-	"/auth/_withAdminAuth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRoute;
+	"/auth/_withAdminAuth/admin/dashboard/borrowedBooks": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksRouteWithChildren;
 	"/auth/_withAdminAuth/admin/dashboard/logs": typeof AuthWithAdminAuthAdminDashboardLogsRoute;
 	"/auth/_withAdminAuth/admin/delete/$": typeof AuthWithAdminAuthAdminDeleteSplatRoute;
 	"/auth/_withAdminAuth/admin/delete/$bookId": typeof AuthWithAdminAuthAdminDeleteBookIdRoute;
@@ -965,6 +1005,7 @@ export interface FileRoutesById {
 	"/auth/_withUserAuth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRoute;
 	"/auth/_withUserAuth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
 	"/auth/_withUserAuth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
+	"/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute;
 }
 
 export interface FileRouteTypes {
@@ -1006,7 +1047,8 @@ export interface FileRouteTypes {
 		| "/auth/user/borrow/borrow"
 		| "/auth/user/dashboard/borrowedBooks"
 		| "/auth/user/dashboard/deleteAccount"
-		| "/auth/user/dashboard/statistics";
+		| "/auth/user/dashboard/statistics"
+		| "/auth/admin/dashboard/borrowedBooks/$bookId";
 	fileRoutesByTo: FileRoutesByTo;
 	to:
 		| "/"
@@ -1045,7 +1087,8 @@ export interface FileRouteTypes {
 		| "/auth/user/borrow/borrow"
 		| "/auth/user/dashboard/borrowedBooks"
 		| "/auth/user/dashboard/deleteAccount"
-		| "/auth/user/dashboard/statistics";
+		| "/auth/user/dashboard/statistics"
+		| "/auth/admin/dashboard/borrowedBooks/$bookId";
 	id:
 		| "__root__"
 		| "/"
@@ -1086,7 +1129,8 @@ export interface FileRouteTypes {
 		| "/auth/_withUserAuth/user/borrow/borrow"
 		| "/auth/_withUserAuth/user/dashboard/borrowedBooks"
 		| "/auth/_withUserAuth/user/dashboard/deleteAccount"
-		| "/auth/_withUserAuth/user/dashboard/statistics";
+		| "/auth/_withUserAuth/user/dashboard/statistics"
+		| "/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId";
 	fileRoutesById: FileRoutesById;
 }
 
@@ -1287,7 +1331,10 @@ export const routeTree = rootRoute
     },
     "/auth/_withAdminAuth/admin/dashboard/borrowedBooks": {
       "filePath": "auth/_withAdminAuth/admin/dashboard/borrowedBooks.tsx",
-      "parent": "/auth/_withAdminAuth/admin/dashboard"
+      "parent": "/auth/_withAdminAuth/admin/dashboard",
+      "children": [
+        "/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId"
+      ]
     },
     "/auth/_withAdminAuth/admin/dashboard/logs": {
       "filePath": "auth/_withAdminAuth/admin/dashboard/logs.tsx",
@@ -1336,6 +1383,10 @@ export const routeTree = rootRoute
     "/auth/_withUserAuth/user/dashboard/statistics": {
       "filePath": "auth/_withUserAuth/user/dashboard/statistics.tsx",
       "parent": "/auth/_withUserAuth/user/dashboard"
+    },
+    "/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId": {
+      "filePath": "auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId.tsx",
+      "parent": "/auth/_withAdminAuth/admin/dashboard/borrowedBooks"
     }
   }
 }
