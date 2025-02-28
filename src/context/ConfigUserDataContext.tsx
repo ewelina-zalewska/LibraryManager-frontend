@@ -1,5 +1,5 @@
 ﻿export type UserDataContextType = {
-	login: string | null;
+	login: string | "";
 	role: "user" | "admin" | null;
 	name: string | null;
 };

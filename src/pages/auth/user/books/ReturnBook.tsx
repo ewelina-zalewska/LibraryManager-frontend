@@ -14,6 +14,7 @@ const currentDate = new Date().getTime();
 export const ReturnBook = () => {
 	const { bookId } = bookRoute.useParams();
 	const userData = useContext(UserDataContext);
+	const { login } = userData;
 	const { data: book } = useSuspenseQuery(borrowedBoookQueryOptions(bookId));
 	const {
 		id,
@@ -64,15 +65,14 @@ export const ReturnBook = () => {
 		setResponse(data);
 		if (data.status === "success") {
 			setSuccess(true);
-			if (userData.login) {
-				CREATE_LOG({
-					action: "Returning the borrowed book",
-					bookId: bookId,
-					created_on: new Date().toISOString().split("T")[0],
-					created_at: getTime(),
-					userID: userData.login,
-				});
-			}
+
+			CREATE_LOG({
+				action: "Returning the borrowed book",
+				bookId: bookId,
+				created_on: new Date().toISOString().split("T")[0],
+				created_at: getTime(),
+				userID: login,
+			});
 		} else setSuccess(false);
 	}, [data]);
 
@@ -84,7 +84,7 @@ export const ReturnBook = () => {
 					setSuccess(false);
 				}
 			}, 3000);
-			console.log(success);
+
 			return () => {
 				clearTimeout(timeout);
 			};

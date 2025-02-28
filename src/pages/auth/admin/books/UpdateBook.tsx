@@ -95,7 +95,6 @@ export const UpdateBook = () => {
 	useEffect(() => {
 		if (!data) return;
 		setResponse(data);
-		console.log(data);
 	}, [data]);
 
 	return (
@@ -119,7 +118,6 @@ export const UpdateBook = () => {
 						onClick={SEND_FORM}
 						disabled={isPending}
 						btnLabel="Edit book"
-						type="submit"
 					></TheButton>
 				</div>
 			</form>

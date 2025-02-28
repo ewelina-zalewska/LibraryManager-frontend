@@ -18,6 +18,7 @@ export const DeleteBook = () => {
 	const { bookId } = bookRoute.useParams();
 	const { data: book } = useSuspenseQuery(bookQueryOptions(bookId));
 	const userData = useContext(UserDataContext);
+	const { login } = userData;
 	const goBackRoute = `/auth/admin/books/${bookId}`;
 
 	const { mutate: CREATE_LOG } = useCreateLogMutation();
@@ -33,7 +34,6 @@ export const DeleteBook = () => {
 				return response.json();
 			})
 			.then((data: ResponseMessage) => {
-				console.log(data);
 				if (data.status === "success") {
 					setResponse(data);
 					if (data.data) {
@@ -60,7 +60,7 @@ export const DeleteBook = () => {
 				bookId: response.bookId || null,
 				created_on: new Date().toISOString().split("T")[0],
 				created_at: getTime(),
-				userID: response.id || userData.login || "",
+				userID: response.id || login,
 			});
 			navigate({ to: "/auth/admin/delete/message" });
 		}

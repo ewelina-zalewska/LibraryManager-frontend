@@ -2,7 +2,7 @@
 import { UserDataContextType } from "@/context/ConfigUserDataContext";
 
 export const UserDataContext = createContext<UserDataContextType>({
-	login: null,
+	login: "",
 	role: null,
 	name: null,
 });

@@ -29,7 +29,6 @@ export const TheLogs = () => {
 				logs.userID.toLowerCase().includes(formState.toLowerCase()),
 		);
 		setFilteredLogs(filterArray);
-		console.log(filteredLogs);
 	}, [formState]);
 
 	useEffect(() => {

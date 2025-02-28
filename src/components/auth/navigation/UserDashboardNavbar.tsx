@@ -1,9 +1,13 @@
-﻿import { Link, useLocation } from "@tanstack/react-router";
+﻿import { useContext } from "react";
+import { UserDataContext } from "@/context/UserDataContext";
+import { Link, useLocation } from "@tanstack/react-router";
 import { Route as statistics } from "@/routes/auth/_withUserAuth/user/dashboard/statistics";
 import { Route as borrowedBooks } from "@/routes/auth/_withUserAuth/user/dashboard/borrowedBooks";
-import { Route as deleteAccount } from "@/routes/auth/_withUserAuth/user/dashboard/deleteAccount";
+import { Route as deleteAccount } from "@/routes/auth/_withUserAuth/user/dashboard/deleteAccount/$userId";
 
 export const UserDashBoardNavbar = () => {
+	const userData = useContext(UserDataContext);
+	const { login } = userData;
 	const location = useLocation();
 
 	const statisticsLink = statistics.fullPath;
@@ -28,6 +32,7 @@ export const UserDashBoardNavbar = () => {
 					<li className="mb-2 md:mr-8">
 						<Link
 							to={borrowedBooksLink}
+							search={{ page: 1 }}
 							className={`${MARK_ACTIVE_PATH(borrowedBooksLink)}`}
 						>
 							Borrowed books
@@ -36,6 +41,7 @@ export const UserDashBoardNavbar = () => {
 					<li>
 						<Link
 							to={deleteAccountLink}
+							params={{ userId: login }}
 							className={`${MARK_ACTIVE_PATH(deleteAccountLink)}`}
 						>
 							Delete Account

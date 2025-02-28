@@ -28,13 +28,18 @@ export const AdminDashBoardNavbar = () => {
 					<li className="mb-2 md:mr-8">
 						<Link
 							to={borrowedBooksLink}
+							search={{ page: 1 }}
 							className={`${MARK_ACTIVE_PATH(borrowedBooksLink)}`}
 						>
 							Borrowed books
 						</Link>
 					</li>
 					<li>
-						<Link to={logsLink} className={`${MARK_ACTIVE_PATH(logsLink)}`}>
+						<Link
+							to={logsLink}
+							search={{ page: 1 }}
+							className={`${MARK_ACTIVE_PATH(logsLink)}`}
+						>
 							Logs
 						</Link>
 					</li>

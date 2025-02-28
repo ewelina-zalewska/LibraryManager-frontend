@@ -11,9 +11,12 @@ import { useNavigate } from "@tanstack/react-router";
 import { DataLoading } from "@/components/handleData/DataLoading";
 import { useLogoutMutation } from "@/mutations/useLogoutMutation";
 import { useCheckDeleteAccount } from "@/hooks/useCheckDeleteAccount";
+import { filterBooks } from "@/utils/filterBooks";
 
 export const DeleteAccount = () => {
 	const userBooks = useCheckDeleteAccount();
+	const { borrowed, notReturned } = filterBooks(userBooks);
+
 	const userData = useContext(UserDataContext);
 	const { login } = userData;
 	const formRef = useRef<HTMLFormElement>(null);
@@ -22,11 +25,8 @@ export const DeleteAccount = () => {
 		isPending: LOAD_CONFIRM,
 		data: DATA_CONFIRM,
 	} = useConfirmDeleteAccountMutation();
-	const {
-		mutate: DELETE_ACCOUNT,
-		isPending: LOAD_DELETE,
-		data: DATA_DELETE,
-	} = useDeleteAccountMutation();
+	const { mutate: DELETE_ACCOUNT, isPending: LOAD_DELETE } =
+		useDeleteAccountMutation();
 	const { mutate: CREATE_LOG } = useCreateLogMutation();
 	const { mutate: LOGOUT_USER } = useLogoutMutation();
 
@@ -78,7 +78,7 @@ export const DeleteAccount = () => {
 			created_at: getTime(),
 			userID: login,
 		});
-		console.log(DATA_DELETE);
+
 		navigate({
 			to: "/logout",
 			search: { status: "The user account has been deleted successfully." },
@@ -98,12 +98,11 @@ export const DeleteAccount = () => {
 			}));
 		}
 	}, [password]);
-	console.log(userBooks);
 	return (
 		<div>
 			{LOAD_DELETE && <DataLoading />}
 			<div className="p-5">
-				{userBooks.length > 0 ? (
+				{!!notReturned || !!borrowed ? (
 					<div>
 						<p className="text-error text-center">
 							You cannot delete your account. Return all books first.
@@ -132,7 +131,7 @@ export const DeleteAccount = () => {
 					<div className="mx-auto p-5">
 						<TheButton
 							onClick={SEND_FORM}
-							disabled={LOAD_CONFIRM || userBooks.length > 0}
+							disabled={LOAD_CONFIRM || !!notReturned || !!borrowed}
 							btnLabel="Delete Account"
 							type="submit"
 						></TheButton>

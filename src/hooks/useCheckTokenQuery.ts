@@ -10,7 +10,7 @@ export const useCheckTokenQuery = (url: string) => {
 	);
 
 	const [userData, setUserData] = useState<UserDataContextType>({
-		login: null,
+		login: "",
 		role: null,
 		name: null,
 	});

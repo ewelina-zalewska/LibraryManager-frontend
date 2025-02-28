@@ -11,7 +11,7 @@ export const useSuccess = (page: string, response: ResponseMessage | null) => {
 	const [success, setSuccess] = useState<boolean>(false);
 	const navigate = useNavigate();
 	const { mutate: CREATE_LOG } = useCreateLogMutation();
-
+	const { login } = userData;
 	useEffect(() => {
 		if (!success) return;
 		const timeout = setTimeout(() => {
@@ -24,7 +24,7 @@ export const useSuccess = (page: string, response: ResponseMessage | null) => {
 					bookId: response.bookId || null,
 					created_on: new Date().toISOString().split("T")[0],
 					created_at: getTime(),
-					userID: response.id || userData.login || "",
+					userID: response.id || login,
 				});
 				setSuccess(false);
 			}

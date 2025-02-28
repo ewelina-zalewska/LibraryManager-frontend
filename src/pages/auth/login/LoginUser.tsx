@@ -76,7 +76,7 @@ export const LoginUser = () => {
 			setLink(authAdminLink);
 		} else setLink(authUserLink);
 
-		if (data?.status === "success") {
+		if (data.status === "success") {
 			setDisabled(true);
 		}
 	}, [data]);
