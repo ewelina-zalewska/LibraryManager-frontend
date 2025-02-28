@@ -53,6 +53,7 @@ import { Route as AuthWithAdminAuthAdminDashboardLogsImport } from "./routes/aut
 import { Route as AuthWithAdminAuthAdminDashboardBorrowedBooksImport } from "./routes/auth/_withAdminAuth/admin/dashboard/borrowedBooks";
 import { Route as AuthWithAdminAuthAdminDashboardAddBooksImport } from "./routes/auth/_withAdminAuth/admin/dashboard/addBooks";
 import { Route as AuthWithAdminAuthAdminBooksBookIdImport } from "./routes/auth/_withAdminAuth/admin/books/$bookId";
+import { Route as AuthWithUserAuthUserDashboardDeleteAccountUserIdImport } from "./routes/auth/_withUserAuth/user/dashboard/deleteAccount/$userId";
 import { Route as AuthWithUserAuthUserDashboardBorrowedBooksBookIdImport } from "./routes/auth/_withUserAuth/user/dashboard/borrowedBooks/$bookId";
 import { Route as AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdImport } from "./routes/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId";
 
@@ -372,6 +373,17 @@ const AuthWithAdminAuthAdminBooksBookIdRoute =
 		import("./routes/auth/_withAdminAuth/admin/books/$bookId.lazy").then(
 			(d) => d.Route,
 		),
+	);
+
+const AuthWithUserAuthUserDashboardDeleteAccountUserIdRoute =
+	AuthWithUserAuthUserDashboardDeleteAccountUserIdImport.update({
+		id: "/$userId",
+		path: "/$userId",
+		getParentRoute: () => AuthWithUserAuthUserDashboardDeleteAccountRoute,
+	} as any).lazy(() =>
+		import(
+			"./routes/auth/_withUserAuth/user/dashboard/deleteAccount/$userId.lazy"
+		).then((d) => d.Route),
 	);
 
 const AuthWithUserAuthUserDashboardBorrowedBooksBookIdRoute =
@@ -701,6 +713,13 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof AuthWithUserAuthUserDashboardBorrowedBooksBookIdImport;
 			parentRoute: typeof AuthWithUserAuthUserDashboardBorrowedBooksImport;
 		};
+		"/auth/_withUserAuth/user/dashboard/deleteAccount/$userId": {
+			id: "/auth/_withUserAuth/user/dashboard/deleteAccount/$userId";
+			path: "/$userId";
+			fullPath: "/auth/user/dashboard/deleteAccount/$userId";
+			preLoaderRoute: typeof AuthWithUserAuthUserDashboardDeleteAccountUserIdImport;
+			parentRoute: typeof AuthWithUserAuthUserDashboardDeleteAccountImport;
+		};
 	}
 }
 
@@ -888,9 +907,24 @@ const AuthWithUserAuthUserDashboardBorrowedBooksRouteWithChildren =
 		AuthWithUserAuthUserDashboardBorrowedBooksRouteChildren,
 	);
 
+interface AuthWithUserAuthUserDashboardDeleteAccountRouteChildren {
+	AuthWithUserAuthUserDashboardDeleteAccountUserIdRoute: typeof AuthWithUserAuthUserDashboardDeleteAccountUserIdRoute;
+}
+
+const AuthWithUserAuthUserDashboardDeleteAccountRouteChildren: AuthWithUserAuthUserDashboardDeleteAccountRouteChildren =
+	{
+		AuthWithUserAuthUserDashboardDeleteAccountUserIdRoute:
+			AuthWithUserAuthUserDashboardDeleteAccountUserIdRoute,
+	};
+
+const AuthWithUserAuthUserDashboardDeleteAccountRouteWithChildren =
+	AuthWithUserAuthUserDashboardDeleteAccountRoute._addFileChildren(
+		AuthWithUserAuthUserDashboardDeleteAccountRouteChildren,
+	);
+
 interface AuthWithUserAuthUserDashboardRouteChildren {
 	AuthWithUserAuthUserDashboardBorrowedBooksRoute: typeof AuthWithUserAuthUserDashboardBorrowedBooksRouteWithChildren;
-	AuthWithUserAuthUserDashboardDeleteAccountRoute: typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
+	AuthWithUserAuthUserDashboardDeleteAccountRoute: typeof AuthWithUserAuthUserDashboardDeleteAccountRouteWithChildren;
 	AuthWithUserAuthUserDashboardStatisticsRoute: typeof AuthWithUserAuthUserDashboardStatisticsRoute;
 }
 
@@ -899,7 +933,7 @@ const AuthWithUserAuthUserDashboardRouteChildren: AuthWithUserAuthUserDashboardR
 		AuthWithUserAuthUserDashboardBorrowedBooksRoute:
 			AuthWithUserAuthUserDashboardBorrowedBooksRouteWithChildren,
 		AuthWithUserAuthUserDashboardDeleteAccountRoute:
-			AuthWithUserAuthUserDashboardDeleteAccountRoute,
+			AuthWithUserAuthUserDashboardDeleteAccountRouteWithChildren,
 		AuthWithUserAuthUserDashboardStatisticsRoute:
 			AuthWithUserAuthUserDashboardStatisticsRoute,
 	};
@@ -1007,12 +1041,13 @@ export interface FileRoutesByFullPath {
 	"/auth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
 	"/auth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRouteWithChildren;
-	"/auth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
+	"/auth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRouteWithChildren;
 	"/auth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
 	"/auth/user/return/$": typeof AuthWithUserAuthUserReturnSplatRoute;
 	"/auth/user/return/$bookId": typeof AuthWithUserAuthUserReturnBookIdRoute;
 	"/auth/admin/dashboard/borrowedBooks/$bookId": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute;
 	"/auth/user/dashboard/borrowedBooks/$bookId": typeof AuthWithUserAuthUserDashboardBorrowedBooksBookIdRoute;
+	"/auth/user/dashboard/deleteAccount/$userId": typeof AuthWithUserAuthUserDashboardDeleteAccountUserIdRoute;
 }
 
 export interface FileRoutesByTo {
@@ -1051,12 +1086,13 @@ export interface FileRoutesByTo {
 	"/auth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
 	"/auth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRouteWithChildren;
-	"/auth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
+	"/auth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRouteWithChildren;
 	"/auth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
 	"/auth/user/return/$": typeof AuthWithUserAuthUserReturnSplatRoute;
 	"/auth/user/return/$bookId": typeof AuthWithUserAuthUserReturnBookIdRoute;
 	"/auth/admin/dashboard/borrowedBooks/$bookId": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute;
 	"/auth/user/dashboard/borrowedBooks/$bookId": typeof AuthWithUserAuthUserDashboardBorrowedBooksBookIdRoute;
+	"/auth/user/dashboard/deleteAccount/$userId": typeof AuthWithUserAuthUserDashboardDeleteAccountUserIdRoute;
 }
 
 export interface FileRoutesById {
@@ -1098,12 +1134,13 @@ export interface FileRoutesById {
 	"/auth/_withUserAuth/user/borrow/$": typeof AuthWithUserAuthUserBorrowSplatRoute;
 	"/auth/_withUserAuth/user/borrow/$bookId": typeof AuthWithUserAuthUserBorrowBookIdRoute;
 	"/auth/_withUserAuth/user/dashboard/borrowedBooks": typeof AuthWithUserAuthUserDashboardBorrowedBooksRouteWithChildren;
-	"/auth/_withUserAuth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRoute;
+	"/auth/_withUserAuth/user/dashboard/deleteAccount": typeof AuthWithUserAuthUserDashboardDeleteAccountRouteWithChildren;
 	"/auth/_withUserAuth/user/dashboard/statistics": typeof AuthWithUserAuthUserDashboardStatisticsRoute;
 	"/auth/_withUserAuth/user/return/$": typeof AuthWithUserAuthUserReturnSplatRoute;
 	"/auth/_withUserAuth/user/return/$bookId": typeof AuthWithUserAuthUserReturnBookIdRoute;
 	"/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId": typeof AuthWithAdminAuthAdminDashboardBorrowedBooksBookIdRoute;
 	"/auth/_withUserAuth/user/dashboard/borrowedBooks/$bookId": typeof AuthWithUserAuthUserDashboardBorrowedBooksBookIdRoute;
+	"/auth/_withUserAuth/user/dashboard/deleteAccount/$userId": typeof AuthWithUserAuthUserDashboardDeleteAccountUserIdRoute;
 }
 
 export interface FileRouteTypes {
@@ -1149,7 +1186,8 @@ export interface FileRouteTypes {
 		| "/auth/user/return/$"
 		| "/auth/user/return/$bookId"
 		| "/auth/admin/dashboard/borrowedBooks/$bookId"
-		| "/auth/user/dashboard/borrowedBooks/$bookId";
+		| "/auth/user/dashboard/borrowedBooks/$bookId"
+		| "/auth/user/dashboard/deleteAccount/$userId";
 	fileRoutesByTo: FileRoutesByTo;
 	to:
 		| "/"
@@ -1192,7 +1230,8 @@ export interface FileRouteTypes {
 		| "/auth/user/return/$"
 		| "/auth/user/return/$bookId"
 		| "/auth/admin/dashboard/borrowedBooks/$bookId"
-		| "/auth/user/dashboard/borrowedBooks/$bookId";
+		| "/auth/user/dashboard/borrowedBooks/$bookId"
+		| "/auth/user/dashboard/deleteAccount/$userId";
 	id:
 		| "__root__"
 		| "/"
@@ -1237,7 +1276,8 @@ export interface FileRouteTypes {
 		| "/auth/_withUserAuth/user/return/$"
 		| "/auth/_withUserAuth/user/return/$bookId"
 		| "/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId"
-		| "/auth/_withUserAuth/user/dashboard/borrowedBooks/$bookId";
+		| "/auth/_withUserAuth/user/dashboard/borrowedBooks/$bookId"
+		| "/auth/_withUserAuth/user/dashboard/deleteAccount/$userId";
 	fileRoutesById: FileRoutesById;
 }
 
@@ -1492,7 +1532,10 @@ export const routeTree = rootRoute
     },
     "/auth/_withUserAuth/user/dashboard/deleteAccount": {
       "filePath": "auth/_withUserAuth/user/dashboard/deleteAccount.tsx",
-      "parent": "/auth/_withUserAuth/user/dashboard"
+      "parent": "/auth/_withUserAuth/user/dashboard",
+      "children": [
+        "/auth/_withUserAuth/user/dashboard/deleteAccount/$userId"
+      ]
     },
     "/auth/_withUserAuth/user/dashboard/statistics": {
       "filePath": "auth/_withUserAuth/user/dashboard/statistics.tsx",
@@ -1513,6 +1556,10 @@ export const routeTree = rootRoute
     "/auth/_withUserAuth/user/dashboard/borrowedBooks/$bookId": {
       "filePath": "auth/_withUserAuth/user/dashboard/borrowedBooks/$bookId.tsx",
       "parent": "/auth/_withUserAuth/user/dashboard/borrowedBooks"
+    },
+    "/auth/_withUserAuth/user/dashboard/deleteAccount/$userId": {
+      "filePath": "auth/_withUserAuth/user/dashboard/deleteAccount/$userId.tsx",
+      "parent": "/auth/_withUserAuth/user/dashboard/deleteAccount"
     }
   }
 }

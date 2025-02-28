@@ -1,6 +1,15 @@
 ﻿import { ChangeEvent } from "react";
 
 //User
+export type User = {
+	id: string;
+	username: string;
+	email: string;
+	password: string;
+	role: "user" | "admin";
+	bookId: string[];
+};
+
 export type UserDto = {
 	username: string;
 	email: string;

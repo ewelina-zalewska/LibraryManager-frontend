@@ -1,14 +1,16 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { TheOutlet } from "@/components/auth/TheOutlet";
+import { userQueryOptions } from "@/queries/userQuery";
 import { DataLoading } from "@/components/handleData/DataLoading";
 import { TheError } from "@/components/handleData/TheError";
-import { PageNotFound } from "@/components/handleData/PageNotFound";
 
 export const Route = createFileRoute(
-	"/auth/_withUserAuth/user/dashboard/deleteAccount",
+	"/auth/_withUserAuth/user/dashboard/deleteAccount/$userId",
 )({
-	component: TheOutlet,
-	notFoundComponent: () => PageNotFound("Books"),
+	loader: ({ context, params }) => {
+		const { queryClient } = context;
+		const { userId } = params;
+		return queryClient.ensureQueryData(userQueryOptions(userId));
+	},
 	pendingComponent: DataLoading,
 	errorComponent: TheError,
 });
