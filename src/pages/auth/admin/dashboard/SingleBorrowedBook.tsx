@@ -1,13 +1,15 @@
-﻿import { useSuspenseQuery } from "@tanstack/react-query";
+﻿import { FormEvent, useContext, useEffect, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Outlet } from "@tanstack/react-router";
 import { borrowedBoookQueryOptions } from "@/queries/borrowedBookQuery";
 import { ModalBox } from "@/components/ModalBox";
 import { LinkToPage } from "@/components/navigation/LinkToPage";
 import { getRouteApi } from "@tanstack/react-router";
 import { TheButton } from "@/components/navigation/TheButton";
-import { FormEvent, useEffect, useState } from "react";
+
 import { checkDeadlineExceeded } from "@/utils/checkDeadlineExceeded";
 import { useUpdateBookNoticeMutation } from "@/mutations/useUpdateBookNoticeMutation";
+import { UserDataContext } from "@/context/UserDataContext";
 
 const booksRoute = getRouteApi(
 	"/auth/_withAdminAuth/admin/dashboard/borrowedBooks/$bookId",
@@ -15,6 +17,8 @@ const booksRoute = getRouteApi(
 
 export const SingleBorrowedBook = () => {
 	const { bookId } = booksRoute.useParams();
+	const userData = useContext(UserDataContext);
+	const { name } = userData;
 	const { data: book } = useSuspenseQuery(borrowedBoookQueryOptions(bookId));
 	const {
 		status,
@@ -77,7 +81,9 @@ export const SingleBorrowedBook = () => {
 					</div>
 					<div className={descriptionContainerStyle}>
 						<p className={titleStyle}>Borrowed by:</p>
-						<p className={descriptionStyle}>{userId}</p>
+						<p className={descriptionStyle}>
+							{name}, {userId}
+						</p>
 					</div>
 					<div className={descriptionContainerStyle}>
 						<p className={titleStyle}>Borrowed on:</p>
