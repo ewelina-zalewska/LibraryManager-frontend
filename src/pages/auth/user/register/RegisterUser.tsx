@@ -26,8 +26,9 @@ export const RegisterUser = () => {
 		email: "",
 		password: "",
 		confirmPassword: "",
+		accessCode: "",
 	});
-	const { username, email, password } = formState;
+	const { username, email, password, accessCode } = formState;
 
 	const [errors, setErrors] = useState<RegisterFormErrors>({
 		username: [],
@@ -49,6 +50,7 @@ export const RegisterUser = () => {
 				username,
 				email,
 				password,
+				accessCode,
 			});
 			setSubmitClicked(false);
 		}
@@ -74,6 +76,7 @@ export const RegisterUser = () => {
 				email: "",
 				password: "",
 				confirmPassword: "",
+				accessCode: "",
 			});
 		}
 	}, [data]);

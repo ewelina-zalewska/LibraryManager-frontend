@@ -7,7 +7,7 @@ export const RegisterUserFormFieldset = ({
 	formState,
 	errors,
 }: RegisterUserFormFieldsetProps) => {
-	const { username, email, password, confirmPassword } = formState;
+	const { username, email, password, confirmPassword, accessCode } = formState;
 	return (
 		<>
 			<legend className="font-normal text-[30px] text-center pb-5">
@@ -49,6 +49,14 @@ export const RegisterUserFormFieldset = ({
 				onChange={onChange}
 			/>
 			<FieldErrors errors={errors.confirmPassword} />
+			<TheInput
+				label="Do you have an access code as admin?"
+				type="password"
+				name="accessCode"
+				placeholder="access code as admin"
+				value={accessCode}
+				onChange={onChange}
+			/>
 		</>
 	);
 };

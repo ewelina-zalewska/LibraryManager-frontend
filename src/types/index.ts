@@ -14,6 +14,7 @@ export type UserDto = {
 	username: string;
 	email: string;
 	password: string;
+	accessCode: string;
 };
 
 export type RegisterForm = {
@@ -21,6 +22,7 @@ export type RegisterForm = {
 	email: string;
 	password: string;
 	confirmPassword: string;
+	accessCode: string;
 };
 
 export type RegisterFormErrors = {
