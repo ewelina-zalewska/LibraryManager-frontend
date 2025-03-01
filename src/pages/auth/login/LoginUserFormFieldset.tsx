@@ -17,7 +17,7 @@ export const LoginUserFormFieldset = ({
 				label="Login"
 				type="text"
 				name="login"
-				placeholder="Login"
+				placeholder="user id"
 				value={login}
 				onChange={onChange}
 			/>
